@@ -1,20 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libft.h                                            :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/11 11:37:24 by misoares          #+#    #+#             */
-/*   Updated: 2024/04/11 11:39:45 by misoares         ###   ########.fr       */
+/*   Created: 2024/04/11 14:12:52 by misoares          #+#    #+#             */
+/*   Updated: 2024/04/11 14:14:21 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBFT_H
-# define LIBFT_H
+#include "libft.h"
 
-# include <stdlib.h>
-# include <unistd.h>
-
-
-#endif
+void *ft_memcpy(void *dest, const void *src, size_t n)
+{
+	
+}

@@ -6,14 +6,13 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 13:08:38 by misoares          #+#    #+#             */
-/*   Updated: 2024/04/08 13:09:31 by misoares         ###   ########.fr       */
+/*   Updated: 2024/04/11 12:11:49 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdio.h>
+#include "libft.h"
 
-int	ft_strlen(char *str)
+int	ft_strlen(const char *str)
 {
 	int len;
 

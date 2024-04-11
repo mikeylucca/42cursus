@@ -6,9 +6,11 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 13:15:31 by misoares          #+#    #+#             */
-/*   Updated: 2024/04/08 13:15:38 by misoares         ###   ########.fr       */
+/*   Updated: 2024/04/11 11:44:48 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "libft.h"
 
 int	ft_atoi(char *str)
 {

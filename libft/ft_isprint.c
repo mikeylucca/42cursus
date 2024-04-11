@@ -6,11 +6,16 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 15:36:59 by misoares          #+#    #+#             */
-/*   Updated: 2024/04/08 15:39:39 by misoares         ###   ########.fr       */
+/*   Updated: 2024/04/11 11:37:34 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 int ft_isprint(int c)
 {
-	
+	if(c >= 32 && c <= 126)
+	{
+		return (1);
+	}
+	else
+		return (0);
 }

@@ -6,11 +6,13 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 13:11:27 by misoares          #+#    #+#             */
-/*   Updated: 2024/04/08 13:11:31 by misoares         ###   ########.fr       */
+/*   Updated: 2024/04/11 11:40:27 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_strncmp(char *s1, char *s2, unsigned int n)
+#include "libft.h"
+
+int strncmp(const char *s1, const char *s2, size_t n)
 {
 	unsigned int	i;
 

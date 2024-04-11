@@ -6,24 +6,11 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 13:16:52 by misoares          #+#    #+#             */
-/*   Updated: 2024/04/08 13:17:11 by misoares         ###   ########.fr       */
+/*   Updated: 2024/04/11 11:44:46 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-
-int	ft_strlen(char *str)
-{
-	int	len;
-
-	len = 0;
-	while (*str != '\0')
-	{
-		len++;
-		str++;
-	}
-	return (len);
-}
+#include "libft.h"
 
 char	*ft_strdup(char *src)
 {
