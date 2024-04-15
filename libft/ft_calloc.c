@@ -1,33 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlcat.c                                       :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/08 13:12:39 by misoares          #+#    #+#             */
-/*   Updated: 2024/04/15 13:59:15 by misoares         ###   ########.fr       */
+/*   Created: 2024/04/15 16:06:13 by misoares          #+#    #+#             */
+/*   Updated: 2024/04/15 16:53:19 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t		ft_strlcat(char *dst, const char *src, size_t dstsize)
+void		*ft_calloc(size_t blocks, size_t size)
 {
-	size_t i;
-	size_t dst_size;
-	size_t src_size;
+    char		*tab;
 
-	dst_size = ft_strlen(dst);
-	src_size = ft_strlen(src);
-	if (dstsize <= dst_size)
-		return (src_size + dstsize);
-	i = 0;
-	while (src[i] && (dst_size + i) < dstsize - 1)
-	{
-		dst[dst_size + i] = src[i];
-		i++;
-	}
-	dst[dst_size + i] = '\0';
-	return (dst_size + src_size);
+    tab = (char *)malloc(blocks * size);
+
+	if (!tab)
+		return (NULL);
+	ft_bzero(tab, blocks * size);
+	return (tab);
 }

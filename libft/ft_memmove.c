@@ -6,7 +6,7 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 13:03:50 by misoares          #+#    #+#             */
-/*   Updated: 2024/04/15 13:15:53 by misoares         ###   ########.fr       */
+/*   Updated: 2024/04/15 13:30:26 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,15 @@ void *ft_memmove(void *dest, const void *src, size_t n)
 	*ds = (unsigned char *)dest;
 	*sr = (unsigned char *)src;
 
-	if (!sr || !ds)
+	if (!sr && !ds)
 		return (NULL);
-	if (/* condition */)
+	if (sr < ds)
 	{
-		
+		while (++i <= n)
+			ds[n - i] = sr[n - i];		
 	}
-	
+	else
+		while (n-- > 0)
+			*(ds++) = *(sr++);
+	return (ds);
 }
