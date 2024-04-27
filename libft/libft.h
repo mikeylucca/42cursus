@@ -6,7 +6,7 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 11:37:24 by misoares          #+#    #+#             */
-/*   Updated: 2024/04/27 16:30:22 by misoares         ###   ########.fr       */
+/*   Updated: 2024/04/27 17:17:37 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,4 +69,5 @@ void				*ft_memchr(const void *s, int c, size_t n);
 void				*ft_memcpy(void *dst, const void *src, size_t n);
 void				*ft_memmove(void *dest, const void *src, size_t n);
 void				*ft_memset(void *b, int c, size_t len);
+void				ft_striteri(char *s, void (*f)(unsigned int, char*));
 #endif

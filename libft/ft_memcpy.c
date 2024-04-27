@@ -6,7 +6,7 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 14:12:52 by misoares          #+#    #+#             */
-/*   Updated: 2024/04/27 15:56:56 by misoares         ###   ########.fr       */
+/*   Updated: 2024/04/27 17:29:30 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	*ft_memcpy(void *dest, const void *src, size_t n)
 		return (NULL);
 	while (i < n)
 	{
-		*(sr + i) = *(ds + i);
+		*(ds + i) = *(sr + i);
 		i++;
 	}
 	return (ds);

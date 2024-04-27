@@ -6,7 +6,7 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 11:48:33 by misoares          #+#    #+#             */
-/*   Updated: 2024/04/27 15:28:59 by misoares         ###   ########.fr       */
+/*   Updated: 2024/04/27 17:24:43 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	*ft_memset(void *s, int c, size_t n)
 	ptr = (unsigned char *)s;
 	while (i < n)
 		ptr[i++] = (unsigned char)c;
-	return (0);
+	return (s);
 }
 
 /* int main(void)
