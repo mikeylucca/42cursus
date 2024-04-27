@@ -6,7 +6,7 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 09:10:01 by misoares          #+#    #+#             */
-/*   Updated: 2024/04/27 16:37:21 by misoares         ###   ########.fr       */
+/*   Updated: 2024/04/27 16:42:58 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ char	*ft_itoa(int n)
 	int		y;
 
 	i = 0;
-	y = 1;
+	y = 0;
 	n1 = (long)n;
 	len = len_num (n1);
 	str_n = malloc(sizeof(char) * (len + 1));
@@ -55,11 +55,10 @@ char	*ft_itoa(int n)
 		str_n[i++] = '-';
 		n1 *= -1;
 	}
-	while (len - y >= i)
+	while (len - ++y >= i)
 	{
 		str_n[len - y] = ('0' + n1 % 10);
 		n1 /= 10;
-		y++;
 	}
 	str_n[len] = '\0';
 	return (str_n);
