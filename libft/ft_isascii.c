@@ -6,18 +6,16 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 15:20:32 by misoares          #+#    #+#             */
-/*   Updated: 2024/04/11 11:44:48 by misoares         ###   ########.fr       */
+/*   Updated: 2024/04/27 15:16:36 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int ft_isascii(int d)
+int	ft_isascii(int d)
 {
-
 	if (d <= 127)
 		return (1);
 	else
 		return (0);
 }
-

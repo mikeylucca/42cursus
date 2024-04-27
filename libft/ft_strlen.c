@@ -6,7 +6,7 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 13:08:38 by misoares          #+#    #+#             */
-/*   Updated: 2024/04/27 13:09:43 by misoares         ###   ########.fr       */
+/*   Updated: 2024/04/27 16:28:44 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 size_t	ft_strlen(const char *s)
 {
-	int len;
+	int	len;
 
 	len = 0;
 	while (s[len] != '\0')

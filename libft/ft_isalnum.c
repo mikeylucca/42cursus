@@ -6,15 +6,15 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 15:11:56 by misoares          #+#    #+#             */
-/*   Updated: 2024/04/11 11:44:47 by misoares         ###   ########.fr       */
+/*   Updated: 2024/04/27 15:15:11 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int ft_isalnum(int c)
+int	ft_isalnum(int c)
 {
-	if(c >= 48 && c <= 122)
+	if (c >= 48 && c <= 122)
 	{
 		return (1);
 	}

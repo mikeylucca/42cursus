@@ -6,11 +6,13 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:10:49 by misoares          #+#    #+#             */
-/*   Updated: 2024/04/15 14:10:51 by misoares         ###   ########.fr       */
+/*   Updated: 2024/04/27 15:24:35 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int			ft_tolower(int c)
+#include "libft.h"
+
+int	ft_tolower(int c)
 {
 	if (c >= 65 && c <= 90)
 		c += 32;

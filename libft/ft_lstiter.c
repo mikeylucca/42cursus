@@ -6,7 +6,7 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 15:54:37 by misoares          #+#    #+#             */
-/*   Updated: 2024/04/27 13:13:31 by misoares         ###   ########.fr       */
+/*   Updated: 2024/04/27 15:19:46 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 void	ft_lstiter(t_list *lst, void (*f)(void *))
 {
-    if (lst && f)
-    {
-        while (lst)
-        {
-            f(lst->content);
-            lst = lst->next;
-        }
-    }
+	if (lst && f)
+	{
+		while (lst)
+		{
+			f(lst->content);
+			lst = lst->next;
+		}
+	}
 }
