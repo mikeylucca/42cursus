@@ -6,18 +6,18 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 13:08:38 by misoares          #+#    #+#             */
-/*   Updated: 2024/04/11 12:11:49 by misoares         ###   ########.fr       */
+/*   Updated: 2024/04/27 13:09:43 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_strlen(const char *str)
+size_t	ft_strlen(const char *s)
 {
 	int len;
 
 	len = 0;
-	while (str[len] != '\0')
+	while (s[len] != '\0')
 	{
 		len++;
 	}
