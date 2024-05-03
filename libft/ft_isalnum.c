@@ -6,7 +6,7 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 15:11:56 by misoares          #+#    #+#             */
-/*   Updated: 2024/04/27 15:15:11 by misoares         ###   ########.fr       */
+/*   Updated: 2024/05/03 15:23:55 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	ft_isalnum(int c)
 {
-	if (c >= 48 && c <= 122)
+	if (ft_isalpha(c) == 1 || ft_isdigit(c) == 1)
 	{
 		return (1);
 	}

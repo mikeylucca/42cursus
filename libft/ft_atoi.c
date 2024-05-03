@@ -6,7 +6,7 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 13:15:31 by misoares          #+#    #+#             */
-/*   Updated: 2024/04/27 12:48:00 by misoares         ###   ########.fr       */
+/*   Updated: 2024/05/03 15:28:26 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	ft_atoi(const char *str)
 	num = 0;
 	while (*str == ' ' || (*str >= '\t' && *str <= '\r'))
 		str++;
-	while (*str == '-' || *str == '+')
+	if (*str == '-' || *str == '+')
 	{
 		if (*str == '-')
 			sinal *= -1;
