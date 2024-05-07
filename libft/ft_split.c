@@ -6,7 +6,7 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 08:27:14 by misoares          #+#    #+#             */
-/*   Updated: 2024/04/27 15:39:43 by misoares         ###   ########.fr       */
+/*   Updated: 2024/05/07 16:02:21 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char	**ft_split(char const *s, char c)
 			s++;
 		if (*s)
 		{
-			if (!strchr(s, c))
+			if (!ft_strchr(s, c))
 				wordlen = ft_strlen(s);
 			else
 				wordlen = ft_strchr(s, c) - s;

@@ -6,7 +6,7 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 15:20:32 by misoares          #+#    #+#             */
-/*   Updated: 2024/04/27 15:16:36 by misoares         ###   ########.fr       */
+/*   Updated: 2024/05/07 18:29:31 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	ft_isascii(int d)
 {
-	if (d <= 127)
+	if (d >= 0 && d <= 127)
 		return (1);
 	else
 		return (0);
