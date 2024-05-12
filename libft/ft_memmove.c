@@ -6,7 +6,7 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 13:03:50 by misoares          #+#    #+#             */
-/*   Updated: 2024/04/28 15:51:37 by misoares         ###   ########.fr       */
+/*   Updated: 2024/05/10 20:00:44 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ void	*ft_memmove(void *dest, const void *src, size_t n)
 		i = n;
 		while (i > 0)
 		{
-			ds[i - 1] = sr[i - 1];
 			i--;
+			ds[i] = sr[i];
 		}
 	}
 	else

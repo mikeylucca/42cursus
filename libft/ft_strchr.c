@@ -6,7 +6,7 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:11:43 by misoares          #+#    #+#             */
-/*   Updated: 2024/05/07 17:58:40 by misoares         ###   ########.fr       */
+/*   Updated: 2024/05/10 14:09:34 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,16 @@
 
 char	*ft_strchr(const char *s, int c)
 {
-	unsigned char uc;
+	unsigned char	uc;
 
 	uc = (unsigned char)c;
 	while (*s)
 	{
 		if (*s == uc)
-			return (char *)s;
+			return ((char *)s);
 		s++;
 	}
 	if (uc == '\0')
-		return (char *)s;
-	return NULL;
+		return ((char *)s);
+	return (NULL);
 }

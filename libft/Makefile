@@ -6,7 +6,7 @@
 #    By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/27 12:15:13 by misoares          #+#    #+#              #
-#    Updated: 2024/04/27 17:18:16 by misoares         ###   ########.fr        #
+#    Updated: 2024/05/10 14:11:36 by misoares         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ BONUS			= ft_lstadd_back.c ft_lstadd_front.c ft_lstclear.c \
 
 BONUS_OBJS		= $(BONUS:.c=.o)
 
-CC 				= gcc
+CC 				= cc
 RM 				= rm -f
 
 CFLAGS 			= -Wall -Wextra -Werror

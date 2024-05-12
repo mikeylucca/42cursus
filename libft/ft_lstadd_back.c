@@ -6,7 +6,7 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 15:35:41 by misoares          #+#    #+#             */
-/*   Updated: 2024/05/03 20:26:52 by misoares         ###   ########.fr       */
+/*   Updated: 2024/05/12 19:07:48 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,8 @@ void	ft_lstadd_back(t_list **lst, t_list *new)
 	else
 	{
 		tmp = *lst;
-		while (tmp->next)
+		while (tmp->next != NULL)
 			tmp = tmp->next;
 		tmp->next = new;
-		new->next = NULL;
 	}
 }
