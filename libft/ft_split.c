@@ -6,7 +6,7 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 08:27:14 by misoares          #+#    #+#             */
-/*   Updated: 2024/05/12 18:20:36 by misoares         ###   ########.fr       */
+/*   Updated: 2024/05/13 15:43:47 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,17 @@ static size_t	get_wordlen(const char *s, char c)
 	return (word_len);
 }
 
+static char	**free_all(char **lst)
+{
+	int	i;
+
+	i = 0;
+	while (lst[i] != NULL)
+		free(lst[i++]);
+	free(lst);
+	return (NULL);
+}
+
 char	**ft_split(char const *s, char c)
 {
 	char	**lst;
@@ -60,10 +71,30 @@ char	**ft_split(char const *s, char c)
 		if (*s)
 		{
 			wordlen = get_wordlen(s, c);
-			lst[i++] = ft_substr(s, 0, wordlen);
+			lst[i] = ft_substr(s, 0, wordlen);
+			if (lst[i++] == NULL)
+				return (free_all(lst));
 			s += wordlen; 
 		}
 	}
 	lst[i] = NULL;
 	return (lst);
 }
+
+/* int	main(void) -- Tests ft_split
+{
+	int		i;
+	char	*str;
+	char	**strss;
+
+	str = "Lorem, ipsum, dolor, sit amet,;
+	strss = ft_split(str, ',');
+	i = -1;
+	while (strss[++i])
+	{
+		printf("%s\n", strss[i]);
+		free(strss[i]);
+	}
+	free(strss);
+	return (0);
+} */

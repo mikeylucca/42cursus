@@ -6,33 +6,12 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 17:15:29 by misoares          #+#    #+#             */
-/*   Updated: 2024/05/12 19:29:34 by misoares         ###   ########.fr       */
+/*   Updated: 2024/05/13 13:13:10 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <stdio.h>
-
-/* int	main(void)
-{
-	int		i;
-	char	*str = ft_strdup("HEY BROTHER!!");
-
-	printf("%s\n", str);
-	i = 0;
-	if (!str)
-	{
-		printf("NULL");
-		return (0);
-	}
-	while (str[i])
-	{
-		printf("%s\n", str[i]);
-		free(str[i++]);
-	}
-	free(str);
-	return (0);
-} */
 
 /* int	main(void) -- Tests ft_split
 {

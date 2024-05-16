@@ -6,7 +6,7 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 15:56:20 by misoares          #+#    #+#             */
-/*   Updated: 2024/05/12 19:30:10 by misoares         ###   ########.fr       */
+/*   Updated: 2024/05/13 14:41:37 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,35 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 	return (new_list);
 }
 
-/* int main (void)
+/* void print_list(t_list *head)
+{
+	t_list *current = head;
+	printf("List content: ");
+	while (current)
+	{
+		printf("%s -> ", (char *)current->content);
+		current = current->next;
+	}
+	printf("NULL\n");
+}
+
+void	*lst_toupper(void *tmp)
+{
+	int i;
+	char *str = (char *)tmp;
+
+	i = 0;
+	while (str[i] != '\0')
+	{
+		if (str[i] >= 97 && str[i] <= 122)
+			str[i] -= 32;
+		i++;
+	}
+	tmp = (void *)str;
+	return (tmp);
+}
+
+int main (void)
 {
 	t_list *head = NULL;
 	t_list *newlst;

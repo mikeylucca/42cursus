@@ -6,7 +6,7 @@
 #    By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/27 12:15:13 by misoares          #+#    #+#              #
-#    Updated: 2024/05/10 14:11:36 by misoares         ###   ########.fr        #
+#    Updated: 2024/05/13 14:58:54 by misoares         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,8 +29,8 @@ BONUS			= ft_lstadd_back.c ft_lstadd_front.c ft_lstclear.c \
 
 BONUS_OBJS		= $(BONUS:.c=.o)
 
-CC 				= cc
-RM 				= rm -f
+CC 				= @cc
+RM 				= @rm -f
 
 CFLAGS 			= -Wall -Wextra -Werror
 
@@ -39,17 +39,22 @@ NAME 			= libft.a
 all:	$(NAME)
 
 $(NAME):		$(OBJS)
-					ar rcs $(NAME) $(OBJS)
+					@ar rcs $(NAME) $(OBJS)
+					@echo "Making all .o files"
 
 clean:	
 				$(RM) $(OBJS) $(BONUS_OBJS)
+				@echo "Cleaning .o files"
 
 fclean:			clean
 					$(RM) $(NAME)
+					@echo "Full clean done."
 
 re:				fclean $(NAME)
+				@echo "Redone."
 
 bonus:			$(OBJS) $(BONUS_OBJS)
-					ar rcs $(NAME) $(OBJS) $(BONUS_OBJS)
+					@ar rcs $(NAME) $(OBJS) $(BONUS_OBJS)
+					@echo "Making Bonus .o files"
 
 .PHONY:			all clean fclean re bonus
