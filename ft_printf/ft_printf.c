@@ -6,7 +6,7 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 17:16:35 by misoares          #+#    #+#             */
-/*   Updated: 2024/05/18 17:44:11 by misoares         ###   ########.fr       */
+/*   Updated: 2024/05/18 18:23:17 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 	counter = 0;
 	if (specifier == 'c')
-		counter += ft_print_char(va_arg(ap, int));
+		counter += ft_print_char(va_arg(ap, int)); // calls for int instead of char due to type promotion.
 	else if (specifier == 's')
 		counter += ft_print_str(va_arg(ap, char *));
 	else if (specifier == 'p')

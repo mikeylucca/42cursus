@@ -6,7 +6,7 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 16:15:52 by misoares          #+#    #+#             */
-/*   Updated: 2024/05/18 16:27:00 by misoares         ###   ########.fr       */
+/*   Updated: 2024/05/18 18:13:48 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,10 @@ int ft_print_str(char *str)
 
 	count = 0;
 	if (!str)
+	{
 		write(1, "(null)", 6);
+		return (6);
+	}
 	while (*str)
 	{
 		ft_print_char((int)*str);
