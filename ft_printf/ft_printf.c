@@ -6,7 +6,7 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 17:16:35 by misoares          #+#    #+#             */
-/*   Updated: 2024/05/16 18:37:04 by misoares         ###   ########.fr       */
+/*   Updated: 2024/05/17 18:38:55 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,11 @@
 	else if (specifier == 's')
 		counter += ft_print_str(va_arg(ap, char *));
 	else if (specifier == 'p')
-	{
-	}
+		counter += ft_print_pointer((unsigned long)va_arg(ap, unsigned long), 87);
 	else if (specifier == 'i' || specifier == 'd')
 		counter += ft_print_digit((long)va_arg(ap, int), 10);
 	else if (specifier == 'u')
-	{
-		// unsigned decimal
-	}
+		counter += ft_printunsigned((unsigned int)va_arg(ap, unsigned int));
 	else if (specifier == 'x')
 		counter += ft_print_digit((long)va_arg(ap, unsigned int), 16);
 	else if (specifier == 'X')

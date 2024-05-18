@@ -6,7 +6,7 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:28:46 by misoares          #+#    #+#             */
-/*   Updated: 2024/05/16 18:29:33 by misoares         ###   ########.fr       */
+/*   Updated: 2024/05/17 18:15:41 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,11 @@ static int ft_print_str(char *str)
 	int count;
 
 	count = 0;
+	if (!str)
+		write(1, "(null)", 6);
 	while (*str)
 	{
-		print_char((int)*str);
+		ft_print_char((int)*str);
 		count++;
 		str++;
 	}
@@ -43,10 +45,12 @@ int ft_print_digit(long nbr, int base)
 		return (ft_print_digit(-nbr, base) + 1);
 	}
 	else if (nbr < base)
-		return (print_char(sym[nbr]));
+		return (ft_print_char(sym[nbr]));
 	else
 	{
 		count = ft_print_digit(nbr / base, base);
-		return (count + print_char(nbr % base));
+		return (count + ft_print_char(nbr % base));
 	}
+	if (nbr == -2147483648)
+		return (11);
 }
