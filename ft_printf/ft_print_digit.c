@@ -1,39 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printunsigned.c                                 :+:      :+:    :+:   */
+/*   ft_print_digit.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/17 16:39:11 by misoares          #+#    #+#             */
-/*   Updated: 2024/05/18 16:31:12 by misoares         ###   ########.fr       */
+/*   Created: 2024/05/16 17:28:46 by misoares          #+#    #+#             */
+/*   Updated: 2024/05/18 17:30:02 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 
-static void	printout(unsigned int nb)
+int ft_print_digit(int n)
 {
-	if (nb > 9)
-		ft_printunsigned(nb / 10);
-	if (nb <= 9)
-	{
-		ft_print_char(nb + 48);
-		return ;
-	}
-	ft_print_char((nb % 10) + 48);
-}
-
-int	ft_printunsigned(unsigned int nb)
-{
+	int				nb;
 	unsigned int	i;
 
-	printout(nb);
+	nb = n;
 	i = 1;
+	if (n < 0 && n != -2147483648)
+	{
+		nb = -n;
+		i++;
+	}
 	while (nb > 9)
 	{
 		nb = nb / 10;
 		i++;
 	}
+	ft_putnbr_fd(n, 1);
+	if (n == -2147483648)
+		return (11);
 	return (i);
 }
+
+

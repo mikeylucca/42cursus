@@ -1,34 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_pointer.c                                 :+:      :+:    :+:   */
+/*   ft_print_hex.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/17 18:19:54 by misoares          #+#    #+#             */
-/*   Updated: 2024/05/18 17:36:11 by misoares         ###   ########.fr       */
+/*   Created: 2024/05/16 18:23:00 by misoares          #+#    #+#             */
+/*   Updated: 2024/05/18 17:36:05 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 
-/* static int ft_strlen(char *str)
-{
-    int len;
-
-    len = 0;
-    while (*str)
-    {
-        len++;
-        str++;
-    }
-    return (len);
-} */
-
-static char	*create_string(unsigned long value, int *strlen)
+static char	*create_string(unsigned int value, int *strlen)
 {
 	int				i;
-	unsigned long	temp;
+	unsigned int	temp;
 	char			*str;
 
 	i = 0;
@@ -43,9 +30,9 @@ static char	*create_string(unsigned long value, int *strlen)
 	return (str);
 }
 
-int	ft_print_pointer(unsigned long value)
+int	ft_print_hex(unsigned int value, int asc)
 {
-	unsigned long	tempval;
+	unsigned int	tempval;
 	char			*printout;
 	int				i;
 	int				*iptr;
@@ -55,19 +42,20 @@ int	ft_print_pointer(unsigned long value)
 	printout = create_string(value, iptr);
 	if (!printout)
 		return (0);
-	while (tempval != 0 && i-- >= 0)
+	while (tempval != 0)
 	{
 		if ((tempval % 16) < 10)
-			printout[i + 1] = (tempval % 16) + 48;
+			printout[i] = (tempval % 16) + 48;
 		else
-			printout[i + 1] = (tempval % 16) + 87;
+			printout[i] = (tempval % 16) + asc;
 		tempval = tempval / 16;
+		i--;
 	}
-	i = ft_strlen(printout);
-	i += ft_print_str("0x");
 	ft_print_str(printout);
+	i = ft_strlen(printout);
 	free(printout);
 	if (value == 0)
 		i += ft_print_char('0');
 	return (i);
 }
+

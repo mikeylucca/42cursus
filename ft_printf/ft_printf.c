@@ -6,13 +6,13 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 17:16:35 by misoares          #+#    #+#             */
-/*   Updated: 2024/05/17 18:38:55 by misoares         ###   ########.fr       */
+/*   Updated: 2024/05/18 17:29:02 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 
- static int	ft_print_stuff(char specifier, va_list ap)
+ int	ft_print_stuff(char specifier, va_list ap)
 {
 	int counter;
 
@@ -22,15 +22,15 @@
 	else if (specifier == 's')
 		counter += ft_print_str(va_arg(ap, char *));
 	else if (specifier == 'p')
-		counter += ft_print_pointer((unsigned long)va_arg(ap, unsigned long), 87);
+		counter += ft_print_pointer((unsigned long)va_arg(ap, unsigned long));
 	else if (specifier == 'i' || specifier == 'd')
-		counter += ft_print_digit((long)va_arg(ap, int), 10);
+		counter += ft_print_digit(va_arg(ap, int), 10);
 	else if (specifier == 'u')
 		counter += ft_printunsigned((unsigned int)va_arg(ap, unsigned int));
 	else if (specifier == 'x')
-		counter += ft_print_digit((long)va_arg(ap, unsigned int), 16);
+		counter += ft_print_hex((long)va_arg(ap, unsigned int), 87);
 	else if (specifier == 'X')
-		counter += ft_print_hexup((long)va_arg(ap, unsigned int), 16);
+		counter += ft_print_hex((long)va_arg(ap, unsigned int), 55);
 	else if (specifier == '%')
 		counter += ft_print_char('%');
 	return (counter);
