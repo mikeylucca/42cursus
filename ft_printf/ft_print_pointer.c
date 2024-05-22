@@ -6,7 +6,7 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 18:19:54 by misoares          #+#    #+#             */
-/*   Updated: 2024/05/18 17:36:11 by misoares         ###   ########.fr       */
+/*   Updated: 2024/05/22 15:01:31 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static char	*create_string(unsigned long value, int *strlen)
 		temp = temp / 16;
 		i++;
 	}
-	str = calloc(i + 1, sizeof(char));
+	str = ft_calloc(i + 1, sizeof(char));
 	*strlen = i - 1;
 	return (str);
 }
