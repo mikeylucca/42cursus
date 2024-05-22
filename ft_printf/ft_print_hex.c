@@ -6,7 +6,7 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:23:00 by misoares          #+#    #+#             */
-/*   Updated: 2024/05/22 14:59:30 by misoares         ###   ########.fr       */
+/*   Updated: 2024/05/22 16:26:32 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ static char	*create_string(unsigned int value, int *strlen)
 int	ft_print_hex(unsigned int value, int asc)
 {
 	unsigned int	tempval;
-	char			*printout;
 	int				i;
 	int				*iptr;
+	char			*printout;
 
 	iptr = &i;
 	tempval = value;
@@ -45,7 +45,7 @@ int	ft_print_hex(unsigned int value, int asc)
 	while (tempval != 0)
 	{
 		if ((tempval % 16) < 10)
-			printout[i] = (tempval % 16) + 48;
+			printout[i] = (tempval % 16) + '0';
 		else
 			printout[i] = (tempval % 16) + asc;
 		tempval = tempval / 16;
@@ -58,4 +58,3 @@ int	ft_print_hex(unsigned int value, int asc)
 		i += ft_print_char('0');
 	return (i);
 }
-

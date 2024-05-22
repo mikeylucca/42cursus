@@ -6,15 +6,15 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 16:15:52 by misoares          #+#    #+#             */
-/*   Updated: 2024/05/18 18:13:48 by misoares         ###   ########.fr       */
+/*   Updated: 2024/05/22 16:18:54 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 
-int ft_print_str(char *str)
+int	ft_print_str(char *str)
 {
-	int count;
+	int	count;
 
 	count = 0;
 	if (!str)

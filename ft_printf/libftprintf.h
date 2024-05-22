@@ -1,11 +1,23 @@
-#ifndef LIBFTPRINTF_H
-#define LIBFTPRINTF_H
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   libftprintf.h                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/22 16:07:16 by misoares          #+#    #+#             */
+/*   Updated: 2024/05/22 16:11:04 by misoares         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-#include <stdio.h>
-#include <unistd.h>
-#include <stdarg.h>
-#include <stdlib.h>
-#include "libft/libft.h"
+#ifndef LIBFTPRINTF_H
+# define LIBFTPRINTF_H
+
+# include <stdio.h>
+# include <unistd.h>
+# include <stdarg.h>
+# include <stdlib.h>
+# include "libft/libft.h"
 
 int	ft_printf(const char *format, ...);
 int	ft_print_char(int c);

@@ -6,13 +6,13 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:28:46 by misoares          #+#    #+#             */
-/*   Updated: 2024/05/18 17:30:02 by misoares         ###   ########.fr       */
+/*   Updated: 2024/05/22 16:11:56 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 
-int ft_print_digit(int n)
+int	ft_print_digit(int n)
 {
 	int				nb;
 	unsigned int	i;
@@ -34,5 +34,3 @@ int ft_print_digit(int n)
 		return (11);
 	return (i);
 }
-
-
