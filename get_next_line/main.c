@@ -1,16 +1,11 @@
 #include "get_next_line.h"
+#include <stdio.h>
 
 int main(void)
 {
     int fd;
-    char *line;
-    int lines;
 
-    lines = 1;
-    fd = open("test.txt", O_RDONLY);
-    
-    while ((line = get_next_line(fd)))
-    {
-        printf("%d->%s", lines++, line);
-    }
+    fd = open("big_line_no_nl", O_RDONLY);
+    printf("%s", get_next_line(fd));
+
 }

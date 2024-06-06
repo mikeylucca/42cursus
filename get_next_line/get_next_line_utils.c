@@ -6,7 +6,7 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 21:30:42 by misoares          #+#    #+#             */
-/*   Updated: 2024/06/04 19:45:26 by misoares         ###   ########.fr       */
+/*   Updated: 2024/06/06 19:15:21 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,10 @@ int	found_newline(t_list *list)
 	return (0);
 }
 
-void    dealloc(t_list **list, t_list *clean_node, char *buff)
+void	dealloc(t_list **list, t_list *clean_node, char *buff)
 {
-	t_list *tmp;
-	
+	t_list	*tmp;
+
 	if (*list == NULL)
 		return ;
 	while (*list)
@@ -64,11 +64,11 @@ t_list	*find_last_node(t_list *list)
 	return (list);
 }
 
-int len_nline(t_list *list)
+int	len_nline(t_list *list)
 {
-	int i;
-	int len;
-	
+	int	i;
+	int	len;
+
 	if (list == NULL)
 		return (0);
 	len = 0;
@@ -90,11 +90,11 @@ int len_nline(t_list *list)
 	return (len);
 }
 
-void    copy_str(t_list *list, char *str)
+void	copy_str(t_list *list, char *str)
 {
-	int i;
-	int k;
-	
+	int	i;
+	int	k;
+
 	if (list == NULL)
 		return ;
 	k = 0;

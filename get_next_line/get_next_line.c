@@ -6,26 +6,25 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 21:20:35 by misoares          #+#    #+#             */
-/*   Updated: 2024/06/04 20:11:37 by misoares         ###   ########.fr       */
+/*   Updated: 2024/06/06 19:14:30 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-void    clean_list(t_list **list)
+void	clean_list(t_list **list)
 {
-	t_list *last_node;
-	t_list *clean_node;
-	int i;
-	int k;
-	char *buff;
+	t_list	*last_node;
+	t_list	*clean_node;
+	int		i;
+	int		k;
+	char	*buff;
 
 	buff = malloc(BUFFER_SIZE + 1);
 	clean_node = malloc(sizeof(t_list));
 	if (buff == NULL || clean_node == NULL)
 		return ;
 	last_node = find_last_node(*list);
-
 	i = 0;
 	k = 0;
 	while (last_node->str_buff[i] != '\0' && last_node->str_buff[i] != '\n')
@@ -55,18 +54,17 @@ char	*get_line(t_list *list) // gets the whole line until \n
 
 void	append(t_list **list, char *buff)
 {
-	t_list  *new_node;
-	t_list  *last_node;
-	
+	t_list	*new_node;
+	t_list	*last_node;
+
 	last_node = find_last_node(*list);
 	new_node = (t_list *)malloc(sizeof(t_list));
 	if (new_node == NULL)
 		return ;
 	if (last_node == NULL)
-	   *list = new_node;
+		*list = new_node;
 	else
 		last_node->next = new_node;
-		
 	new_node->str_buff = buff;
 	new_node->next = NULL;
 }
@@ -75,8 +73,8 @@ void	append(t_list **list, char *buff)
 
 void	create_list(t_list **list, int fd)
 {
-	int     chars_read;
-	char    *buff;
+	int		chars_read;
+	char	*buff;
 
 	// scan line if \n is present
 	while (!found_newline(*list))
