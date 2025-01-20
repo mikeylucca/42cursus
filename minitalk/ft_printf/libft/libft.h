@@ -6,7 +6,7 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 11:37:24 by misoares          #+#    #+#             */
-/*   Updated: 2024/05/10 13:42:24 by misoares         ###   ########.fr       */
+/*   Updated: 2025/01/20 01:22:58 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ typedef struct s_list
 }					t_list;
 
 char				*ft_itoa(int n);
+char				*ft_appendC(char *start, char c);
 char				*ft_strchr(const char *s, int c);
 char				*ft_strdup(const char *s1);
 char				*ft_strjoin(char const *s1, char const *s2);
