@@ -1,22 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk.h                                         :+:      :+:    :+:   */
+/*   ft_print_digit.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/16 15:19:01 by misoares          #+#    #+#             */
-/*   Updated: 2025/01/20 01:10:58 by misoares         ###   ########.fr       */
+/*   Created: 2024/05/16 17:28:46 by misoares          #+#    #+#             */
+/*   Updated: 2024/05/22 16:11:56 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# ifndef MINITALK_H
-# define MINITALK_H
+#include "libftprintf.h"
 
-# include "../ft_printf/libftprintf.h"
-# include "../ft_printf/libft/libft.h"
-# include <unistd.h>
-# include <signal.h>
-# include <stdlib.h>
+int	ft_print_digit(int n)
+{
+	int				nb;
+	unsigned int	i;
 
-#endif
+	nb = n;
+	i = 1;
+	if (n < 0 && n != -2147483648)
+	{
+		nb = -n;
+		i++;
+	}
+	while (nb > 9)
+	{
+		nb = nb / 10;
+		i++;
+	}
+	ft_putnbr_fd(n, 1);
+	if (n == -2147483648)
+		return (11);
+	return (i);
+}
