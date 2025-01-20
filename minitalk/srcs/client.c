@@ -6,11 +6,11 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 15:27:48 by misoares          #+#    #+#             */
-/*   Updated: 2025/01/20 01:05:42 by misoares         ###   ########.fr       */
+/*   Updated: 2025/01/20 01:16:30 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "../includes/minitalk.h"
 
 // sends the binary message to the server
 // waits so the signals won't get ignored
