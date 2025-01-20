@@ -6,7 +6,7 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 15:27:48 by misoares          #+#    #+#             */
-/*   Updated: 2025/01/20 02:06:23 by misoares         ###   ########.fr       */
+/*   Updated: 2025/01/20 02:13:34 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	main(int argc, char **argv)
 
 	if (argc != 3)
 	{
-		ft_printf("wrong number of arguments\n");
+		ft_printf("Usage is PID + message you moron\n");
 		return (0);
 	}
 	pid = ft_atoi(argv[1]);
@@ -86,7 +86,7 @@ int	main(int argc, char **argv)
     }
 	if (bits == NULL)
 	{
-		ft_printf("allocation went wrong\n");
+		ft_printf("U goofed the alloc\n");
 		return (0);
 	}
 	ft_send_msg(pid, bits);
