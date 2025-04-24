@@ -6,7 +6,7 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 15:27:52 by misoares          #+#    #+#             */
-/*   Updated: 2025/03/04 23:41:07 by misoares         ###   ########.fr       */
+/*   Updated: 2025/04/24 14:45:28 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@ static void	ft_convert(char *s)
 	write(1, &c, 1);
 }
 
-// reads every bit and appends it to bits
+/* // reads every bit and appends it to bits
 // if its a 8 bit it prints the char to the console
 static void	ft_confirm(int sig)
 {
-	static unsigned char	*bits;
+	static char	*bits;
 	static int	bitcount;
 
 	bitcount++;
@@ -54,6 +54,29 @@ static void	ft_confirm(int sig)
 		free(bits);
 		bits = NULL;
 	}
+} */
+
+static void	ft_confirm(int sig)
+{
+    static char		bits[9] = {0}; // Fixed-size buffer for 8 bits + null terminator
+    static int		bitcount;
+
+
+	bitcount = 0;
+
+    if (sig == SIGUSR1)
+        bits[bitcount] = '1'; // Append '1' for SIGUSR1
+    else
+        bits[bitcount] = '0'; // Append '0' for SIGUSR2
+
+    bitcount++;
+
+    if (bitcount == 8) // If 8 bits are collected
+    {
+        bits[8] = '\0';   // Reset the buffer
+        ft_convert(bits); // Convert and print the character
+        bitcount = 0;     // Reset bit count
+    }
 }
 
 //quando receber nulo printa quebra de linha

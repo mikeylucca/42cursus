@@ -6,7 +6,7 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 15:27:48 by misoares          #+#    #+#             */
-/*   Updated: 2025/01/28 16:09:55 by misoares         ###   ########.fr       */
+/*   Updated: 2025/04/24 14:28:58 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,5 +94,6 @@ int	main(int argc, char **argv)
 		return (0);
 	}
 	ft_send_msg(pid, bits);
+	ft_printf("\n");
 	free(bits);
 }
