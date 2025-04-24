@@ -6,117 +6,132 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 18:22:20 by misoares          #+#    #+#             */
-/*   Updated: 2025/01/24 18:49:08 by misoares         ###   ########.fr       */
+/*   Updated: 2025/04/24 14:16:07 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
-/*
- * Loop decays once
- * 		~cheapest_node tops is a
- * 		~relative target_node tops in b
-*/
-static void	rotate_both(t_stack **a,
-						t_stack **b,
-						t_stack *cheapest_node)
+int	r_top(t_elem *stack_a, int index, char *r, char *rr)
 {
-	while (*a != cheapest_node->target_node
-		&& *b != cheapest_node)
-		rr(a, b, false);
-	set_current_position(*a);
-	set_current_position(*b);
-}
+	int	op;
+	int	nb_op;
+	int	sign;
 
-static void	reverse_rotate_both(t_stack **a,
-								t_stack **b,
-								t_stack *cheapest_node)
-{
-	while (*a != cheapest_node->target_node
-		&& *b != cheapest_node)
-		rrr(a, b, false);
-	set_current_position(*a);
-	set_current_position(*b);
-}
-
-/*
- * Conclude the rotation of the stacks 
-*/
-void	finish_rotation(t_stack **stack,
-							t_stack *top_node,
-							char stack_name)
-{
-	while (*stack != top_node)
+	nb_op = get_op_for_topplace(stack_a, index, 1);
+	sign = nb_op;
+	if (nb_op < 0)
+		nb_op = -nb_op;
+	op = nb_op;
+	if (nb_op != 0)
 	{
-		if (stack_name == 'a')
+		while (nb_op > 0)
 		{
-			if (top_node->above_median)
-				ra(stack, false);
+			if (sign > 0)
+				shift_up(stack_a, r);
 			else
-				rra(stack, false);
+				shift_down(stack_a, rr);
+			nb_op--;
 		}
-		else if (stack_name == 'b')
+	}
+	if (sign > 0)
+		sign = 1;
+	else
+		sign = -1;
+	return (sign * op);
+}
+
+void	resolve_coherences(t_elem *stack_a, t_elem *stack_b, int index)
+{
+	int	dist;
+
+	dist = get_coherences(stack_a, stack_b, index);
+	if (dist > 0)
+	{
+		while (dist > 0)
 		{
-			if (top_node->above_median)
-				rb(stack, false);
-			else
-				rrb(stack, false);
-		}	
+			ft_double_shift(stack_a, stack_b, 0);
+			dist--;
+		}
+	}
+	else if (dist < 0)
+	{
+		dist = -dist;
+		while (dist > 0)
+		{
+			ft_double_shift(stack_a, stack_b, 1);
+			dist--;
+		}
 	}
 }
 
-/*
- * Move the node from 'b' to 'a'
- * with the metadata available in the node
- * 1)Make the target nodes emerge
- * 2)push in A
-*/
-static void	move_nodes(t_stack **a, t_stack **b)
+void	resolve_num(t_elem *stack_a, t_elem *stack_b, int index, int stack_size)
 {
-	t_stack	*cheapest_node;
+	int	start;
+	int	same;
 
-	cheapest_node = return_cheapest(*b);
-	if (cheapest_node->above_median
-		&& cheapest_node->target_node->above_median)
-		rotate_both(a, b, cheapest_node);
-	else if (!(cheapest_node->above_median)
-		&& !(cheapest_node->target_node->above_median))
-		reverse_rotate_both(a, b, cheapest_node);
-	finish_rotation(b, cheapest_node, 'b');
-	finish_rotation(a, cheapest_node->target_node, 'a');
-	pa(a, b, false);
+	start = get_start_stack(stack_a);
+	same = get_coherences(stack_a, stack_b, index);
+	resolve_coherences(stack_a, stack_b, index);
+	if (same != 0)
+		index -= same;
+	if (index >= stack_size - 2)
+		index = start + (index - (stack_size - 1));
+	else if (index < start)
+		index = get_end_stack(stack_a) + index;
+	index -= r_top(stack_a, index, "rb\n", "rrb\n");
+	if (index >= stack_size - 2)
+		index = start + (index - (stack_size - 1));
+	if (get_min_stack(stack_b).num > stack_a[index].num \
+	|| get_max_stack(stack_b, -1).num < stack_a[index].num)
+		r_top(stack_b, get_min_stack(stack_b).index, "ra\n", "rra\n");
+	else
+		r_top(stack_b, get_min_above_tresh(stack_b, stack_a[index].num).index, \
+		"ra\n", "rra\n");
+	push_stack(stack_a, stack_b, "pa\n");
 }
 
-/*
- * ~Push all nodes in B 
- * ~For every configuration choose the "cheapest_node"
- * ~Push everything back in A in order
-*/
-void	push_swap(t_stack **a, t_stack **b)
+int	get_median(t_elem *stack)
 {
-	t_stack	*smallest;
-	int				len_a;
+	int	start;
+	int	end;
 
-	len_a = stack_size(*a);
-	if (len_a == 5)
-		handle_five(a, b);
-	else
+	start = get_start_stack(stack);
+	end = get_end_stack(stack);
+	while (start <= end)
 	{
-		while (len_a-- > 3)
-			pb(b, a, false);
+		if (is_median(stack, stack[start].num))
+			return (stack[start].num);
+		start++;
 	}
-	tiny_sort(a);
-	while (*b)
+	return (-1);
+}
+
+void	resolve_stack(t_elem *stack_a, t_elem *stack_b, int stack_size)
+{
+	int	index;
+	int	median;
+
+	index = get_start_stack(stack_a);
+	median = get_median(stack_a);
+	while (index < stack_size - 4)
 	{
-		init_nodes(*a, *b);
-		move_nodes(a, b);
+		push_stack(stack_a, stack_b, "pb\n");
+		if (stack_b[get_start_stack(stack_b)].num > median && \
+		get_end_stack(stack_a) - get_start_stack(stack_a) + 1 > 3)
+			shift_up(stack_b, "rb\n");
+		index++;
 	}
-	set_current_position(*a);
-	smallest = find_smallest(*a);
-	if (smallest->above_median)
-		while (*a != smallest)
-			ra(a, false);
-	else
-		while (*a != smallest)
-			rra(a, false);
+	resolve_three(stack_a);
+	index = get_start_stack(stack_b);
+	while (index < get_end_stack(stack_b))
+	{
+		resolve_num(stack_b, stack_a, \
+		get_best_op_index(stack_b, stack_a, stack_size), stack_size);
+		index++;
+	}
+	r_top(stack_a, get_min_above_tresh(stack_a, stack_b[index].num).index, \
+	"ra\n", "rra\n");
+	push_stack(stack_b, stack_a, "pa\n");
+	r_top(stack_a, get_min_stack(stack_a).index, "ra\n", "rra\n");
 }

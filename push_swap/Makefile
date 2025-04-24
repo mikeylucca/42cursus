@@ -6,7 +6,7 @@
 #    By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/23 21:56:12 by misoares          #+#    #+#              #
-#    Updated: 2025/01/24 19:00:47 by misoares         ###   ########.fr        #
+#    Updated: 2025/04/24 14:11:59 by misoares         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,9 +20,8 @@ HEADER_LIST = push_swap.h
 HEADER_DIRECTORY = includes/
 HEADERS = $(addprefix $(HEADER_DIRECTORY), $(HEADER_LIST))
 
-SRCS_LIST = algorithm.c ft_pushswap_split.c swap_movements.c main.c parser.c \
-			push_movements.c push_swap_init.c reverse_rotate_movements.c rotate_movements.c \
-			small_sort.c stack_init.c stack_utils.c
+SRCS_LIST = algorithm.c algorithm_helper.c error_handler.c operations.c \
+			push_swap.c utils.c utils_stack.c ft_split_mult.c
 
 SRCS_DIRECTORY = srcs/
 SRC = $(addprefix $(SRCS_DIRECTORY), $(SRCS_LIST))

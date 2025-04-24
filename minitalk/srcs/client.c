@@ -6,11 +6,13 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 15:27:48 by misoares          #+#    #+#             */
-/*   Updated: 2025/01/20 02:13:34 by misoares         ###   ########.fr       */
+/*   Updated: 2025/01/28 16:09:55 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minitalk.h"
+
+// ADD FUNC TO CHECK PID, se tiver qualquer coisa que n seja numero retorna erro
 
 // sends the binary message to the server
 // waits so the signals won't get ignored
@@ -78,6 +80,8 @@ int	main(int argc, char **argv)
 	}
 	pid = ft_atoi(argv[1]);
 	bits = ft_to_bit(argv[2], 0, 0);
+// 	while () - check if isdigit, if not return errors
+		/* code */
     if (pid <= 0)
     {
         ft_printf("Invalid PID\n");

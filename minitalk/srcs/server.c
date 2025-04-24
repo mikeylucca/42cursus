@@ -6,7 +6,7 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 15:27:52 by misoares          #+#    #+#             */
-/*   Updated: 2025/01/20 01:46:21 by misoares         ###   ########.fr       */
+/*   Updated: 2025/03/04 23:41:07 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void	ft_convert(char *s)
 // if its a 8 bit it prints the char to the console
 static void	ft_confirm(int sig)
 {
-	static char	*bits;
+	static unsigned char	*bits;
 	static int	bitcount;
 
 	bitcount++;
@@ -55,6 +55,8 @@ static void	ft_confirm(int sig)
 		bits = NULL;
 	}
 }
+
+//quando receber nulo printa quebra de linha
 
 // prints the server PID
 // waits endlessly for a signal to convert
