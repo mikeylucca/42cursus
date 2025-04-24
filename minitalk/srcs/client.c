@@ -6,7 +6,7 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 15:27:48 by misoares          #+#    #+#             */
-/*   Updated: 2025/04/24 14:28:58 by misoares         ###   ########.fr       */
+/*   Updated: 2025/04/24 17:41:51 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,13 @@ static void	ft_send_msg(int pid, char *s)
 		i++;
 		usleep(80);
 	}
+	i = 0;
+    while (i < 8)
+    {
+        kill(pid, SIGUSR2); // Send '0' as SIGUSR2
+        usleep(80);
+        i++;
+    }
 }
 
 // converts the string to binary
