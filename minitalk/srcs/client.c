@@ -6,7 +6,7 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 15:27:48 by misoares          #+#    #+#             */
-/*   Updated: 2025/04/24 17:41:51 by misoares         ###   ########.fr       */
+/*   Updated: 2025/04/27 14:45:40 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,13 @@ static void	ft_send_msg(int pid, char *s)
 		else
 			kill(pid, SIGUSR2);
 		i++;
-		usleep(80);
+		usleep(100);
 	}
 	i = 0;
     while (i < 8)
     {
         kill(pid, SIGUSR2); // Send '0' as SIGUSR2
-        usleep(80);
+        usleep(100);
         i++;
     }
 }
@@ -71,6 +71,38 @@ static char	*ft_to_bit(char *s, size_t i, size_t j)
 	return (ret);
 }
 
+
+int	is_numeric(const char *str)
+{
+    int	i;
+
+    i = 0;
+    if (!str || str[0] == '\0') // Check for empty string
+        return (0);
+    while (str[i])
+    {
+        if (!ft_isdigit(str[i])) // Check if each character is a digit
+            return (0);
+        i++;
+    }
+    return (1);
+}
+
+int	validate_pid(const char *pid_str)
+{
+    if (!is_numeric(pid_str))
+    {
+        ft_printf("Invalid PID: must contain only digits\n");
+        return (0);
+    }
+    int pid = ft_atoi(pid_str);
+    if (pid <= 0 || kill(pid, 0) == -1)
+    {
+        ft_printf("Invalid PID\n");
+        return (0);
+    }
+    return (pid);
+}
 // prints possible errors
 // takes the first argument and converts it to the server PID
 // coverts the string to binary
@@ -82,14 +114,13 @@ int	main(int argc, char **argv)
 
 	if (argc != 3)
 	{
-		ft_printf("Usage is PID + message you moron\n");
+		ft_printf("Usage is PID + message\n");
 		return (0);
 	}
-	pid = ft_atoi(argv[1]);
+	if (!(pid = validate_pid(argv[1])))
+        return (0);
 	bits = ft_to_bit(argv[2], 0, 0);
-// 	while () - check if isdigit, if not return errors
-		/* code */
-    if (pid <= 0)
+    if (pid <= 0 || kill(pid, 0) == -1)
     {
         ft_printf("Invalid PID\n");
         free(bits);

@@ -6,7 +6,7 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 15:27:52 by misoares          #+#    #+#             */
-/*   Updated: 2025/04/24 17:51:09 by misoares         ###   ########.fr       */
+/*   Updated: 2025/04/27 14:45:42 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ static void	ft_confirm(int sig)
 		bits = ft_appendC(bits, '1');
 	if (bitcount == 8)
 	{
+		bits[8] = '\0';
 		if (ft_strlen(bits) == 8 && !ft_strncmp(bits, "00000000", 8))
             write(1, "\n", 1); // Print a newline
         else
@@ -65,12 +66,14 @@ static void	ft_confirm(int sig)
 // waits endlessly for a signal to convert
 int	main(void)
 {
-	ft_printf("Server PID: %u\n", getpid());
-	while (1 == 1)
-	{
-		signal(SIGUSR1, ft_confirm);
-		signal(SIGUSR2, ft_confirm);
-		pause();
-	}
-	return (0);
+    struct sigaction	sa;
+
+    ft_printf("Server PID: %u\n", getpid());
+    sa.sa_flags = SA_RESTART;
+    sa.sa_handler = ft_confirm;
+    sigaction(SIGUSR1, &sa, NULL);
+    sigaction(SIGUSR2, &sa, NULL);
+    while (1)
+        pause();
+    return (0);
 }
