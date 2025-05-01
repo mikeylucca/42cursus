@@ -6,74 +6,80 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 15:27:52 by misoares          #+#    #+#             */
-/*   Updated: 2025/04/27 14:45:42 by misoares         ###   ########.fr       */
+/*   Updated: 2025/05/01 19:42:47 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minitalk.h"
 
-// converts binary to ascii and prints it
-static void	ft_convert(char *s)
+void	ft_error_handler(int i)
 {
-	int				pow;
-	unsigned char	c;
-	size_t			i;
-
-	pow = 1;
-	c = 0;
-	i = ft_strlen(s) - 1;
-	while (i + 1 != 0)
+	if (i == 0)
 	{
-		c += pow * (s[i] - '0');
-		pow *= 2;
-		i--;
+		write(1, "Error KILL\n", 12);
+		exit(1);
 	}
-	write(1, &c, 1);
-}
-
-// reads every bit and appends it to bits
-// if its a 8 bit it prints the char to the console
-static void	ft_confirm(int sig)
-{
-	static char	*bits;
-	static int	bitcount;
-
-	bitcount++;
-	if (bits == NULL)
+	if (i == 1)
 	{
-		bits = ft_strdup("");
-		bitcount = 1;
-	}
-	if (sig == SIGUSR2)
-		bits = ft_appendC(bits, '0');
-	else
-		bits = ft_appendC(bits, '1');
-	if (bitcount == 8)
-	{
-		bits[8] = '\0';
-		if (ft_strlen(bits) == 8 && !ft_strncmp(bits, "00000000", 8))
-            write(1, "\n", 1); // Print a newline
-        else
-            ft_convert(bits);
-		free(bits);
-		bits = NULL;
+		write(1, "Error SIGACTION\n", 17);
+		exit(1);
 	}
 }
 
-//quando receber nulo printa quebra de linha
+void	ft_process_character(unsigned char val, int id)
+{
+    if (val == 0)
+    {
+        write(1, "\n", 1);
+        if (kill(id, SIGUSR2) == -1)
+            ft_error_handler(0);
+    }
+    else
+        write(1, &val, 1);
+}
 
-// prints the server PID
-// waits endlessly for a signal to convert
+void	ft_signal_handler(int sig, siginfo_t *info, void *context)
+{
+    static unsigned char	val = 0;
+    static int				bit = 1;
+    static int				id = 0;
+
+    if (info->si_pid != 0)
+        id = info->si_pid;
+    (void)context;
+    if (sig == SIGUSR1)
+        val += 0;
+    if (sig == SIGUSR2)
+        val += bit;
+    bit <<= 1;
+    if (bit == 256)
+    {
+        bit = 1;
+        ft_process_character(val, id); // Process the received character
+        val = 0;
+    }
+    if (kill(id, SIGUSR1) == -1)
+        ft_error_handler(0);
+}
+
 int	main(void)
 {
-    struct sigaction	sa;
+	pid_t				pid;
+	struct sigaction	action;
 
-    ft_printf("Server PID: %u\n", getpid());
-    sa.sa_flags = SA_RESTART;
-    sa.sa_handler = ft_confirm;
-    sigaction(SIGUSR1, &sa, NULL);
-    sigaction(SIGUSR2, &sa, NULL);
-    while (1)
-        pause();
-    return (0);
+	action.sa_flags = SA_SIGINFO;
+	action.sa_sigaction = ft_signal_handler;
+	pid = getpid();
+	if (sigaction(SIGUSR1, &action, NULL) == -1
+		|| sigaction(SIGUSR2, &action, NULL) == -1)
+	{
+		ft_error_handler(1);
+		return (1);
+	}
+	write(1, "Server PID = ", 13);
+	ft_putnbr_fd(pid, 1);
+	write(1, "\n", 1);
+	while (1)
+		pause();
+	return (0);
 }
