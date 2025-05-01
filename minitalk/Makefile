@@ -6,12 +6,12 @@
 #    By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/20 01:13:06 by misoares          #+#    #+#              #
-#    Updated: 2025/04/27 18:15:58 by misoares         ###   ########.fr        #
+#    Updated: 2025/05/01 22:05:42 by misoares         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Compiler and flags
-CC = gcc
+CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
 # Directories
