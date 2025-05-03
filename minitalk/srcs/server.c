@@ -6,7 +6,7 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 15:27:52 by misoares          #+#    #+#             */
-/*   Updated: 2025/05/01 22:10:13 by misoares         ###   ########.fr       */
+/*   Updated: 2025/05/03 15:16:21 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,40 +26,44 @@ void	ft_error_handler(int i)
 	}
 }
 
+// prints the char. if string ended, prints new line.
 void	ft_process_character(unsigned char val, int id)
 {
-    if (val == 0)
-    {
-        write(1, "\n", 1);
-        if (kill(id, SIGUSR2) == -1)
-            ft_error_handler(0);
-    }
-    else
-        write(1, &val, 1);
+	if (val == 0)
+	{
+		write(1, "\n", 1);
+		if (kill(id, SIGUSR2) == -1)
+			ft_error_handler(0);
+	}
+	else
+		write(1, &val, 1);
 }
 
+// handles the signal, stores the bit in val 
+// and after char is reconstructed (bit == 256), 
+// calls the function to process it
 void	ft_signal_handler(int sig, siginfo_t *info, void *context)
 {
-    static unsigned char	val = 0;
-    static int				bit = 1;
-    static int				id = 0;
+	static unsigned char	val = 0;
+	static int				bit = 1;
+	static int				id = 0;
 
-    if (info->si_pid != 0)
-        id = info->si_pid;
-    (void)context;
-    if (sig == SIGUSR1)
-        val += 0;
-    if (sig == SIGUSR2)
-        val += bit;
-    bit <<= 1;
-    if (bit == 256)
-    {
-        bit = 1;
-        ft_process_character(val, id); // Process the received character
-        val = 0;
-    }
-    if (kill(id, SIGUSR1) == -1)
-        ft_error_handler(0);
+	if (info->si_pid != 0)
+		id = info->si_pid;
+	(void)context;
+	if (sig == SIGUSR1)
+		val += 0;
+	if (sig == SIGUSR2)
+		val += bit;
+	bit <<= 1;
+	if (bit == 256)
+	{
+		bit = 1;
+		ft_process_character(val, id);
+		val = 0;
+	}
+	if (kill(id, SIGUSR1) == -1)
+		ft_error_handler(0);
 }
 
 int	main(void)

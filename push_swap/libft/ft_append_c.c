@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_appendC.c                                       :+:      :+:    :+:   */
+/*   ft_append_c.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 01:22:00 by misoares          #+#    #+#             */
-/*   Updated: 2025/01/20 02:14:16 by misoares         ###   ########.fr       */
+/*   Updated: 2025/05/03 18:23:45 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <stdlib.h>
 
-char	*ft_appendC(char *start, char c)
+char	*ft_append_c(char *start, char c)
 {
 	size_t	i;
 	char	*tmp;

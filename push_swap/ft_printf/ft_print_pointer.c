@@ -6,7 +6,7 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 18:19:54 by misoares          #+#    #+#             */
-/*   Updated: 2024/05/22 17:04:09 by misoares         ###   ########.fr       */
+/*   Updated: 2025/05/03 18:26:57 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static char	*create_string(unsigned long value, int *strlen)
 
 	i = 0;
 	temp = value;
-	if (value == 0) 
+	if (value == 0)
 	{
 		str = ft_calloc(5, sizeof(char));
 		ft_memcpy(str, "(nil)", 5);

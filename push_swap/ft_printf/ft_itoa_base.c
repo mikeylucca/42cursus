@@ -6,7 +6,7 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 09:10:01 by misoares          #+#    #+#             */
-/*   Updated: 2024/05/16 17:13:32 by misoares         ###   ########.fr       */
+/*   Updated: 2025/05/03 18:26:05 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	base_size(size_t n, int base_len)
 {
-	int len;
+	int	len;
 
 	len = 0;
 	if (n == 0)

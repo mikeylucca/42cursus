@@ -6,7 +6,7 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 11:37:24 by misoares          #+#    #+#             */
-/*   Updated: 2025/01/23 22:26:13 by misoares         ###   ########.fr       */
+/*   Updated: 2025/05/03 18:23:26 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,13 @@ typedef struct s_list
 	struct s_list	*next;
 }					t_list;
 
-
-
 char				*ft_itoa(int n);
-char				*ft_appendC(char *start, char c);
+char				*ft_append_c(char *start, char c);
 char				*ft_strchr(const char *s, int c);
 char				*ft_strdup(const char *s1);
 char				*ft_strjoin(char const *s1, char const *s2);
 char				*ft_strmapi(char const *s, char (*f)(unsigned int, char));
-char				*ft_strnstr(const char *haystack, const char *needle, 
+char				*ft_strnstr(const char *haystack, const char *needle,
 						size_t len);
 char				*ft_strrchr(const char *s, int c);
 char				*ft_strtrim(char const *s1, char const *set);
@@ -55,7 +53,7 @@ size_t				ft_strlcat(char *dst, const char *src, size_t size);
 size_t				ft_strlcpy(char *dst, const char *src, size_t dstsize);
 size_t				ft_strlen(const char *s);
 t_list				*ft_lstlast(t_list *lst);
-t_list				*ft_lstmap(t_list *lst, void *(*f)(void *), 
+t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
 						void (*del)(void *));
 t_list				*ft_lstnew(void *content);
 void				ft_bzero(void *s, size_t n);

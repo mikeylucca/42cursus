@@ -6,7 +6,7 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 15:27:48 by misoares          #+#    #+#             */
-/*   Updated: 2025/05/01 19:46:12 by misoares         ###   ########.fr       */
+/*   Updated: 2025/05/03 15:24:24 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,23 +78,23 @@ void	ft_receipt(int sig, siginfo_t *info, void *context)
 int	main(int ac, char **av)
 {
 	struct sigaction	action;
-	int pid;
+	int					pid;
 
+	if (ac != 3)
+	{
+		ft_printf("Usage is PID + String\n");
+		exit(EXIT_FAILURE);
+	}
 	pid = ft_atoi(av[1]);
 	action.sa_flags = SA_SIGINFO;
 	action.sa_sigaction = ft_receipt;
 	if (sigaction(SIGUSR1, &action, NULL) == -1
 		|| sigaction(SIGUSR2, &action, NULL) == -1)
 		ft_error_handler(1);
-	 if (pid <= 0 || kill(pid, 0) == -1) // Validate PID
-    {
-        write(1, "Invalid PID\n", 12);
-        return (1);
-    }
-	if (ac != 3)
+	if (pid <= 0 || kill(pid, 0) == -1)
 	{
-		ft_printf("Usage is PID + String");
-		exit(EXIT_FAILURE);
+		write(1, "Invalid PID\n", 12);
+		return (1);
 	}
 	ft_send_signal(pid, av[2]);
 	while (1)

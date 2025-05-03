@@ -6,7 +6,7 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 08:27:14 by misoares          #+#    #+#             */
-/*   Updated: 2024/05/13 15:43:47 by misoares         ###   ########.fr       */
+/*   Updated: 2025/05/03 18:14:49 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ char	**ft_split(char const *s, char c)
 			lst[i] = ft_substr(s, 0, wordlen);
 			if (lst[i++] == NULL)
 				return (free_all(lst));
-			s += wordlen; 
+			s += wordlen;
 		}
 	}
 	lst[i] = NULL;

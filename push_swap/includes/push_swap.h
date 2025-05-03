@@ -6,7 +6,7 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 00:41:55 by misoares          #+#    #+#             */
-/*   Updated: 2025/04/21 10:05:29 by misoares         ###   ########.fr       */
+/*   Updated: 2025/05/03 18:22:40 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@
 # include <limits.h>
 # include "../libft/libft.h"
 
-typedef struct s_elem {
+typedef struct s_elem
+{
 	int		num;
 	int		filled;
 	int		index;
