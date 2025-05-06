@@ -1,25 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk.h                                         :+:      :+:    :+:   */
+/*   ft_rec_power.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/16 15:19:01 by misoares          #+#    #+#             */
-/*   Updated: 2025/05/06 19:37:32 by misoares         ###   ########.fr       */
+/*   Created: 2025/05/06 13:04:29 by misoares          #+#    #+#             */
+/*   Updated: 2025/05/06 13:08:30 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_H
-# define MINITALK_H
+#include "libft.h"
 
-# include "../ft_printf/libftprintf.h"
-# include "../ft_printf/libft/libft.h"
-# include <unistd.h>
-# include <signal.h>
-# include <stdlib.h>
-
-# define WAIT_TIME 800
-
-int		error_print(int i);
-#endif
+int	ft_rec_power(int nb, int power)
+{
+	if (power < 0)
+		return (0);
+	else if (power == 0)
+		return (1);
+	return (nb * ft_rec_power(nb, power - 1));
+}

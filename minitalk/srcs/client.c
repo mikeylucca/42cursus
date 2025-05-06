@@ -6,97 +6,101 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 15:27:48 by misoares          #+#    #+#             */
-/*   Updated: 2025/05/03 15:24:24 by misoares         ###   ########.fr       */
+/*   Updated: 2025/05/06 18:20:56 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minitalk.h"
 
-void	ft_error_handler(int i)
+static int	validate_syntax(int ac, char **av)
 {
-	if (i == 0)
+	int		idx;
+	char	*str;
+
+	idx = -1;
+	if (ac != 3)
+		return (error_print(3));
+	str = av[1];
+	while (str[++idx])
 	{
-		write(1, "Error KILL\n", 12);
-		exit(1);
+		if (!(str[idx] >= '0' && str[idx] <= '9'))
+			return (error_print(2));
 	}
-	if (i == 1)
+	return (0);
+}
+
+static void	send_char(unsigned char ch, int pid)
+{
+	int	idx;
+
+	idx = -1;
+	while (++idx < 8)
 	{
-		write(1, "Error SIGACTION\n", 17);
-		exit(1);
+		if (ch & 0x01)
+			kill(pid, SIGUSR2);
+		else
+			kill(pid, SIGUSR1);
+		ch = ch >> 1;
+		usleep(WAIT_TIME);
 	}
 }
 
-void	ft_send_terminator(int pid)
+static void	send_len(int msg_len, int pid)
 {
-	static int	i = 0;
+	int	idx;
 
-	if (i <= 8)
-		if (kill(pid, SIGUSR1) == -1)
-			ft_error_handler(0);
-	i++;
+	idx = -1;
+	while (++idx < 32)
+	{
+		if (msg_len & 0x01)
+			kill(pid, SIGUSR2);
+		else
+			kill(pid, SIGUSR1);
+		msg_len = msg_len >> 1;
+		usleep(WAIT_TIME);
+	}
 }
 
-void	ft_send_signal(int pid, char *str)
+static void	ft_sig_send(int signal)
 {
-	static int	bit = 0;
-	static char	*str_bis = 0;
+	static int	bits;
+	static int	bytes;
 
-	if (str)
-		str_bis = str;
-	if (*str_bis)
+	if (signal == SIGUSR2)
 	{
-		if ((((unsigned char)*str_bis >> bit) % 2) == 0)
-			if (kill(pid, SIGUSR1) == -1)
-				ft_error_handler(0);
-		if ((((unsigned char)*str_bis >> bit) % 2) == 1)
-			if (kill(pid, SIGUSR2) == -1)
-				ft_error_handler(0);
-		bit++;
-		if (bit == 8)
+		bits++;
+		if (bits == 8)
 		{
-			str_bis++;
-			bit = 0;
+			bytes++;
+			bits = 0;
 		}
 	}
-	if (!(*str_bis))
-		ft_send_terminator(pid);
-}
-
-void	ft_receipt(int sig, siginfo_t *info, void *context)
-{
-	static int	id;
-
-	if (info->si_pid != 0)
-		id = info->si_pid;
-	(void)context ;
-	if (sig == SIGUSR1)
-		ft_send_signal(id, NULL);
-	if (sig == SIGUSR2)
-		exit(EXIT_SUCCESS);
+	else if (signal == SIGUSR1)
+	{
+		ft_printf("Message Sent\n");
+		exit(0);
+	}
 }
 
 int	main(int ac, char **av)
 {
-	struct sigaction	action;
-	int					pid;
+	pid_t	pid;
+	int		idx;
 
-	if (ac != 3)
-	{
-		ft_printf("Usage is PID + String\n");
-		exit(EXIT_FAILURE);
-	}
-	pid = ft_atoi(av[1]);
-	action.sa_flags = SA_SIGINFO;
-	action.sa_sigaction = ft_receipt;
-	if (sigaction(SIGUSR1, &action, NULL) == -1
-		|| sigaction(SIGUSR2, &action, NULL) == -1)
-		ft_error_handler(1);
-	if (pid <= 0 || kill(pid, 0) == -1)
-	{
-		write(1, "Invalid PID\n", 12);
+	if (validate_syntax(ac, av) != 0)
 		return (1);
-	}
-	ft_send_signal(pid, av[2]);
+	if (av[2][0] == '\0')
+		return (error_print(2));
+	pid = ft_atoi(av[1]);
+	if (kill(pid, 0) == -1 || pid <= 0)
+		return (error_print(2));
+	signal(SIGUSR1, ft_sig_send);
+	signal(SIGUSR2, ft_sig_send);
+	idx = -1;
+	send_len(ft_strlen(av[2]), pid);
+	while (av[2][++idx])
+		send_char(av[2][idx], pid);
+	send_char(av[2][idx], pid);
 	while (1)
 		pause();
 	return (0);

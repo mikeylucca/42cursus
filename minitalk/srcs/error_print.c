@@ -1,25 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk.h                                         :+:      :+:    :+:   */
+/*   error_print.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/16 15:19:01 by misoares          #+#    #+#             */
-/*   Updated: 2025/05/06 19:37:32 by misoares         ###   ########.fr       */
+/*   Created: 2025/05/06 11:25:38 by misoares          #+#    #+#             */
+/*   Updated: 2025/05/06 19:37:51 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_H
-# define MINITALK_H
+#include "../includes/minitalk.h"
 
-# include "../ft_printf/libftprintf.h"
-# include "../ft_printf/libft/libft.h"
-# include <unistd.h>
-# include <signal.h>
-# include <stdlib.h>
-
-# define WAIT_TIME 800
-
-int		error_print(int i);
-#endif
+int	error_print(int i)
+{
+	if (i == 1)
+	{
+		ft_printf("String cannot be empty\n");
+		return (1);
+	}
+	else if (i == 2)
+	{
+		ft_printf("Invalid PID\n");
+		return (1);
+	}
+	else if (i == 3)
+	{
+		ft_printf("Usage is PID + Message\n");
+		return (1);
+	}
+	else
+		return (0);
+}

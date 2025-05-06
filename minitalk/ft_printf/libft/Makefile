@@ -6,7 +6,7 @@
 #    By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/27 12:15:13 by misoares          #+#    #+#              #
-#    Updated: 2025/05/03 18:13:46 by misoares         ###   ########.fr        #
+#    Updated: 2025/05/06 19:34:11 by misoares         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ SRCS 			= ft_isalnum.c ft_isprint.c ft_memcmp.c  ft_putchar_fd.c ft_split.c \
 					ft_memmove.c ft_putnbr_fd.c  ft_strdup.c  ft_strlen.c  ft_strrchr.c \
 					ft_toupper.c ft_calloc.c  ft_isdigit.c ft_memchr.c  ft_memset.c  \
 					ft_putstr_fd.c  ft_strjoin.c ft_strmapi.c ft_striteri.c ft_append_c.c \
+					ft_rec_power.c
 
 
 OBJS			= $(SRCS:.c=.o)
@@ -38,23 +39,15 @@ NAME 			= libft.a
 
 all:	$(NAME)
 
-$(NAME):		$(OBJS)
-					@ar rcs $(NAME) $(OBJS)
-					@echo "Making all .o files"
+$(NAME):		$(OBJS) $(BONUS_OBJS)
+					@ar rcs $(NAME) $(OBJS) $(BONUS_OBJS)
 
 clean:	
 				$(RM) $(OBJS) $(BONUS_OBJS)
-				@echo "Cleaning .o files"
 
 fclean:			clean
 					$(RM) $(NAME)
-					@echo "Full clean done."
 
 re:				fclean $(NAME)
-				@echo "Redone."
-
-bonus:			$(OBJS) $(BONUS_OBJS)
-					@ar rcs $(NAME) $(OBJS) $(BONUS_OBJS)
-					@echo "Making Bonus .o files"
 
 .PHONY:			all clean fclean re bonus
