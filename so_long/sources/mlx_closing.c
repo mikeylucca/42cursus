@@ -6,7 +6,7 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 17:51:08 by misoares          #+#    #+#             */
-/*   Updated: 2025/05/14 12:10:10 by misoares         ###   ########.fr       */
+/*   Updated: 2025/05/14 16:17:56 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 /*
 This function frees the map, line by line
 */
-
 void	map_destroyer(t_game *game)
 {
 	int	i;

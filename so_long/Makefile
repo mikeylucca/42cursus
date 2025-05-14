@@ -6,7 +6,7 @@
 #    By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/12 08:09:05 by misoares          #+#    #+#              #
-#    Updated: 2025/05/14 15:54:41 by misoares         ###   ########.fr        #
+#    Updated: 2025/05/14 18:24:05 by misoares         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,4 +70,4 @@ fclean:					clean
 						$(RM) $(NAME) $(NAME_BONUS)
 						@echo "\033[33m[Fully cleaned up]\033[0m"
 
-re:						fclean 
+re:						fclean all

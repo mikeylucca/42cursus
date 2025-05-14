@@ -6,7 +6,7 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 17:51:48 by misoares          #+#    #+#             */
-/*   Updated: 2025/05/14 16:07:02 by misoares         ###   ########.fr       */
+/*   Updated: 2025/05/14 16:19:23 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,7 @@
 This function checks whether the file ends with the correct extension
 It's fine if the name contains ALSO the extension within its name
 But it HAS TO end with the correct extension
-
 */
-
 int	check_xt(char *map)
 {
 	char	*name_end;
@@ -49,7 +47,6 @@ Oh and no, an empty argument such as: ./so_long ""
 		yes it could... 
 		but I felt the 2nd error message was more fitting
 */
-
 t_game	*valid_map(char *mappy, t_game *game)
 {
 	if (!check_xt(mappy))

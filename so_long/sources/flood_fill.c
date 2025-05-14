@@ -6,7 +6,7 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 17:06:08 by misoares          #+#    #+#             */
-/*   Updated: 2025/05/14 12:15:27 by misoares         ###   ########.fr       */
+/*   Updated: 2025/05/14 16:13:56 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ This is the core of the floodfill algorithm :
 	- finally, check all 4 directions from current 'square', recursively
 		-> if next square is not a wall, replace character (filler) with 'F'
 */
-
 void	flooder(t_game *game, t_map size, t_character charpos, char filler)
 {
 	if ((charpos.y_char < 0 || charpos.y_char >= size.y_map || \
@@ -51,7 +50,6 @@ void	flooder(t_game *game, t_map size, t_character charpos, char filler)
 /*
 This function wil be a 'dam' to canalize the recursive part of the flood fill
 */
-
 void	dam(t_game *game, t_map size, t_character charpos)
 {
 	if (game->map.map[charpos.y_char][charpos.x_char] == 'P')
@@ -64,7 +62,6 @@ void	dam(t_game *game, t_map size, t_character charpos)
 /*
 This function is where the reachability of exit/items is checked
 */
-
 int	caught_em_all(t_game *game, int itemy, int exity)
 {
 	if (itemy != game->map.item_count)
@@ -85,12 +82,7 @@ This function saves the # of exit and items in variables,
 	then re-initilizes the values in structure,
 	starts the flood-fill pathfinding
 	verifies that the exit and all items and reachable
-
-to check (print) the result of floodfill :
-	for (int i = 0; i < size.y; ++i)  // TO BE REMOVED
-			ft_printf("%s\n", game->map.map[i]);
 */
-
 int	flood_it(t_game *game)
 {
 	t_character	charpos;

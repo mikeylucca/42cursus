@@ -6,7 +6,7 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 17:51:26 by misoares          #+#    #+#             */
-/*   Updated: 2025/05/14 12:10:06 by misoares         ###   ########.fr       */
+/*   Updated: 2025/05/14 16:17:48 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 /*
 This function records the length and size of the map in the struct
 */
-
 void	update_size(t_game *game, int i, int j)
 {
 	game->map.line_size = i - 1;
@@ -25,7 +24,6 @@ void	update_size(t_game *game, int i, int j)
 /*
 This function finds the length and height of the map
 */
-
 void	get_coord(char *mappy, t_game *game)
 {
 	char	*mapper;
@@ -57,7 +55,6 @@ void	get_coord(char *mappy, t_game *game)
 This function fills the 'map' element of the "map" struct 
 	with the map from the .ber file
 */
-
 char	**fill_map(char *mappy, t_game *game, char **mapping)
 {
 	int		i;
@@ -90,7 +87,6 @@ char	**fill_map(char *mappy, t_game *game, char **mapping)
 /*
 This function is a hub to initialize the map
 */
-
 t_game	*map_init(char *mappy, t_game *game)
 {
 	get_coord(mappy, game);
@@ -107,23 +103,3 @@ t_game	*map_init(char *mappy, t_game *game)
 		return (0);
 	return (game);
 }
-
-/* Fct to print map in shell
-void	archeck(t_game *game)
-{
-	ft_printf("checking array\n");
-	int j = 0;
-	int	k = 0;
-	while (k < game->map.col_size)
-	{
-		while (j < game->map.line_size)
-		{
-			ft_printf("%c", game->map.map[k][j]);
-			j++;
-		}
-		ft_printf("\n");
-		j = 0;
-		k++;
-	}
-	ft_printf("checking end\n\n\n");
-} */

@@ -6,7 +6,7 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 17:51:55 by misoares          #+#    #+#             */
-/*   Updated: 2025/05/14 12:21:22 by misoares         ###   ########.fr       */
+/*   Updated: 2025/05/14 20:53:19 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ int	check_char(char check, t_game *game)
 	if (!ft_strchr(char_ok, check))
 	{
 		ft_error(game, "This map contains invalid character(s)!\n");
-		ft_error(game, "Valid characters are : 0 1 P E C\n");
 		return (0);
 	}
 	if (game->map.hero_count > 1 || game->map.exit_count > 1)
@@ -44,11 +43,11 @@ int	check_char(char check, t_game *game)
 	}
 	return (1);
 }
+
 /*
 This function goes through the map and verifies every character 
 with check_char()
 */
-
 int	valid_char(t_game *game)
 {
 	int	i;
