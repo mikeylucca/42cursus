@@ -16,7 +16,6 @@
 /*
 ** Keyboard alphabet
 */
-
 # define K_A 97
 # define K_B 98
 # define K_C 99
@@ -136,41 +135,10 @@
 /*
 ** Mouse
 */
-
 # define M_CLK_L 1
 # define M_CLK_M 2
 # define M_CLK_R 3
 # define M_SCR_U 4
 # define M_SCR_D 5
-
-/*
-These are not defined yet
-
-** Keyboard MISC :
-# define K_CMD_L
-
-
-** Keyboard function keys :
-# define K_F1
-# define K_F2
-# define K_F3
-# define K_F4 
-# define K_F5
-# define K_F6
-# define K_F7
-# define K_F8
-# define K_F9
-# define K_F10
-# define K_F11
-# define K_F12
-# define K_F13
-# define K_F14
-# define K_F15
-# define K_F_KEY
-# define K_END 
-# define K_FN_DEL
-# define K_REMOVE 
-
-*/
 
 #endif

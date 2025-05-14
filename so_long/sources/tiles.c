@@ -12,6 +12,8 @@
 
 #include "../includes/so_long.h"
 
+// como que sabe onde meter tuto
+
 void	load_tiles(t_game *game, int x_map, int y_map)
 {
 	if (game->map.map[y_map][x_map] == '1')

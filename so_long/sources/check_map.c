@@ -16,7 +16,6 @@
 This function records the numbers of special characters: player, items and exits
 If this number is not valid, it displays the appropriate warning
 */
-
 int	check_char(char check, t_game *game)
 {
 	char	*char_ok;
@@ -105,7 +104,6 @@ This function checks the shape of the map (has to be rectangular)
 It does so by checking that all lines have the same length as the first
 That's why you can't have any empty line
 */
-
 int	shape(t_game *game)
 {
 	int	i;
@@ -131,7 +129,6 @@ int	shape(t_game *game)
 /*
 This function is a hub to check everything else
 */
-
 int	check_map(t_game *game)
 {
 	if (!shape(game))

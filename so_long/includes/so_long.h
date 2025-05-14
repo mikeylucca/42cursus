@@ -62,11 +62,6 @@ typedef struct s_character
 	int				inventory;
 }	t_character;
 
-/*
- elder_index: if hero walked next to elders, then items turn into necronomicon
- no, i don't know how to implement it at the moment
-*/
-
 typedef struct s_map
 {
 	int				x_map;
@@ -95,7 +90,7 @@ typedef struct s_show
 	int				y_win;
 }	t_show;
 
-//besoin d'ajouter la mlx ici ?
+
 typedef struct s_game
 {
 	struct s_character	player;

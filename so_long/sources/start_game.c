@@ -29,7 +29,7 @@ void	display_map(t_game *game)
 		x++;
 	}
 }
-
+// check this clientMessage, LeaveWindowMask
 void	display_game(t_game *game)
 {
 	display_map(game);
