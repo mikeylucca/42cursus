@@ -6,7 +6,7 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 12:54:15 by misoares          #+#    #+#             */
-/*   Updated: 2025/08/03 19:21:44 by misoares         ###   ########.fr       */
+/*   Updated: 2025/08/03 21:57:04 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 #include "../libraries/libft/libft.h"
 
 #define OFFSET 48
+#define MAX_PHILOS 250
 
 
 /*

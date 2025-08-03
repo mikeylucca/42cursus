@@ -6,7 +6,7 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 14:19:09 by misoares          #+#    #+#             */
-/*   Updated: 2025/08/03 19:59:10 by misoares         ###   ########.fr       */
+/*   Updated: 2025/08/03 22:03:39 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,15 +74,17 @@ void	input_parse(t_data *data, char **av)
 	data->time_to_die = philo_atol(av[2]) * 1e3; //* 1e3 = 1000
 	data->time_to_eat = philo_atol(av[3]) * 1e3;
 	data->time_to_sleep = philo_atol(av[4]) * 1e3;
-	if (data->time_to_die < 6e4 || data->time_to_eat < 6e4
-		|| data->time_to_sleep < 6e4)
+	if (data->time_to_die < 1e4 || data->time_to_eat < 1e4
+		|| data->time_to_sleep < 1e4)
 	{
-		error_exit(RED"Timestamp lower than 60ms"RESET);
+		error_exit(RED"Timestamp lower than 10ms"RESET);
+	}
+	if (data->philo_nbr > MAX_PHILOS)
+	{
+		error_exit(RED"Maximum amount of Philos is 250"RESET);
 	}
 	if (av[5])
 	{
 		data->max_meals = philo_atol(av[5]);
 	}
-	
-	
 }

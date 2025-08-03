@@ -6,7 +6,7 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 17:35:32 by misoares          #+#    #+#             */
-/*   Updated: 2025/08/03 20:00:51 by misoares         ###   ########.fr       */
+/*   Updated: 2025/08/03 21:56:36 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	*dinner_sim(void *data)
 
 		thinking(philo);
 	}
-	
+
 
 	return (NULL);
 }
