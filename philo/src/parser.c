@@ -6,7 +6,7 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 14:19:09 by misoares          #+#    #+#             */
-/*   Updated: 2025/08/03 17:32:12 by misoares         ###   ########.fr       */
+/*   Updated: 2025/08/03 19:59:10 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ static const char *input_validate(const char *str)
 
 	len = 0;
 	while (is_space(*str))
-		*str++;
+		str++;
 	if (*str == '+')
-		*str++;
+		str++;
 	else if (*str == '-')
 		error_exit(RED"Only Positive values allowed"RESET);
 	if (!is_digit(*str))

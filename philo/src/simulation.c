@@ -6,7 +6,7 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 17:35:32 by misoares          #+#    #+#             */
-/*   Updated: 2025/08/03 19:45:29 by misoares         ###   ########.fr       */
+/*   Updated: 2025/08/03 20:00:51 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,10 @@ void	start_simulation(t_data *data)
 	else if (data->philo_nbr == 1)
 	{
 		/* TODO */
+		return;
 	}
 	else
+	{
 		while (data->philo_nbr > ++i)
 		{
 			thread_handler(&data->philos[i].thread_id, dinner_sim, &data->philos[i], CREATE);
@@ -90,7 +92,6 @@ void	start_simulation(t_data *data)
 		while (++i < data->philo_nbr)
 			thread_handler(&data->philos[i].thread_id, NULL, NULL, JOIN);
 		// if reach this line, all philos == full
-		
-		
+	}
 	
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: misoares <misoares@student.42lisboa.com>   #+#  +:+       +#+        */
+/*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-06-15 12:54:15 by misoares          #+#    #+#             */
-/*   Updated: 2025-06-15 12:54:15 by misoares         ###   ########.fr       */
+/*   Created: 2025/06/15 12:54:15 by misoares          #+#    #+#             */
+/*   Updated: 2025/08/03 19:21:44 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 #include <stdlib.h>
 #include <errno.h>
 #include "../libraries/libft/libft.h"
+
+#define OFFSET 48
 
 
 /*
@@ -79,6 +81,24 @@ typedef enum e_opcode
 	DETACH,	//6
 }			t_opcode;
 
+/* PPHILO STATES */
+typedef enum e_status
+{
+	EATING,
+	SLEEPING,
+	THINKING,
+	TAKE_FIRST_FORK,
+	TAKE_SECOND_FORK,
+	DIED,
+}			t_status;
+
+typedef enum e_timecode
+{
+	SECOND,
+	MILLISECOND,
+	MICROSECOND,
+}			t_timecode;
+
 typedef pthread_mutex_t t_mutex;
 
 // for compiling
@@ -101,6 +121,7 @@ typedef struct s_philo
 	t_fork 	*first_fork;
 	t_fork	*second_fork;
 	pthread_t thread_id; // philo == thread
+	t_mutex	philo_mutex; // for races with monitor
 	t_data	*data;
 }  t_philo;
 
@@ -118,8 +139,11 @@ struct s_data
 	long	max_meals; // [5] || flag if -1
 	long	start_simulation;
 	bool	end_simulation; // triggers when philo full or dies
+	t_mutex	data_mutex; // avoid race while reading from data
+	t_mutex	write_mutex;
 	t_fork	*forks; // all forks
 	t_philo *philos; // all philosofers
+	bool	threads_ready; // sync philos
 };
 
 //ERROR
@@ -135,5 +159,25 @@ void	mutex_handler(t_mutex *mutex, t_opcode opcode);
 
 // INIT
 void    init_data(t_data *data);
+
+//SIMULATION
+void    start_simulation(t_data *data);
+
+// SETTERS & GETTERS
+void    set_bool(t_mutex *mutex, bool *dest, bool value);
+bool    get_bool(t_mutex *mutex, bool *value);
+void    set_long(t_mutex *mutex, long *dest, long value);
+long    get_long(t_mutex *mutex, long *value);
+bool	simulation_done(t_data *data);
+
+// SYNC Utils
+void    wait_threads(t_data *data);
+
+//Normal UTILS
+long	gettime(t_timecode timecode);
+void	precise_usleep(long usec, t_data *data);
+void	write_status(t_status status, t_philo *philo, bool debug);
+
+
 
 #endif

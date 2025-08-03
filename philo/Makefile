@@ -3,11 +3,12 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror -g -pthread
 LIBFT_DIR = libraries/libft
 LIBFT = $(LIBFT_DIR)/libft.a
-SRC = src/main.c src/utils.c #src/init.c src/threads.c 
-OBJ = $(SRC:.c=.o)
+SRC_DIR = src
+SRCS = $(wildcard $(SRC_DIR)/*.c)
+OBJ = $(SRCS:.c=.o)
 
 MAKEFLAGS += --no-print-directory
-TOTAL_FILES := $(words $(SRC))
+TOTAL_FILES := $(words $(SRCS))
 COMPILED := 0
 
 all: $(NAME)
