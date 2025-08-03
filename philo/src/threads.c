@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   threads.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: misoares <misoares@student.42lisboa.com>   #+#  +:+       +#+        */
+/*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-06-15 13:01:53 by misoares          #+#    #+#             */
-/*   Updated: 2025-06-15 13:01:53 by misoares         ###   ########.fr       */
+/*   Created: 2025/06/15 13:01:53 by misoares          #+#    #+#             */
+/*   Updated: 2025/08/03 19:35:21 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	thread_handler(pthread_t *thread, void *(*foo)(void *), void *data, t_opcod
 		thread_error_handler(pthread_create(thread, NULL, foo, data), opcode);
 	}
 	else if (opcode == JOIN)
-		thread_error_handler(pthread_join(thread, NULL), opcode);
+		thread_error_handler(pthread_join(*thread, NULL), opcode);
 	else if (opcode == DETACH)
 		thread_error_handler(pthread_detach(*thread), opcode);
 	else

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: misoares <misoares@student.42lisboa.com>   #+#  +:+       +#+        */
+/*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-06-15 14:19:09 by misoares          #+#    #+#             */
-/*   Updated: 2025-06-15 14:19:09 by misoares         ###   ########.fr       */
+/*   Created: 2025/06/15 14:19:09 by misoares          #+#    #+#             */
+/*   Updated: 2025/08/03 17:32:12 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static long philo_atol(const char *str)
 	num = 0;
 	str = input_validate(str);
 	while (is_digit(*str))
-		num = (num * 10) + (*str++ - 48);
+		num = (num * 10) + (*str++ - OFFSET);
 	if (num > INT_MAX)
 		error_exit(RED"Value too big, limit is INT_MAX"RESET);
 	return (num);

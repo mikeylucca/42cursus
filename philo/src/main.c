@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: misoares <misoares@student.42lisboa.com>   #+#  +:+       +#+        */
+/*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-06-15 13:01:46 by misoares          #+#    #+#             */
-/*   Updated: 2025-06-15 13:01:46 by misoares         ###   ########.fr       */
+/*   Created: 2025/06/15 13:01:46 by misoares          #+#    #+#             */
+/*   Updated: 2025/08/03 19:33:33 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int main(int ac, char **av)
 		//*starts simulation
 		start_simulation(&data);
 		//*stops simulation when philos are full or 1 philo dies
-		cleaner(&data);
+		//cleaner(&data);
 	}
 	else
 	{
