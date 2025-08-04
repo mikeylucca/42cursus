@@ -6,7 +6,7 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 14:19:09 by misoares          #+#    #+#             */
-/*   Updated: 2025/08/03 22:07:10 by misoares         ###   ########.fr       */
+/*   Updated: 2025/08/04 16:28:59 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,11 @@ static long philo_atol(const char *str)
 void	input_parse(t_data *data, char **av)
 {
 	data->philo_nbr = philo_atol(av[1]);
-	data->time_to_die = philo_atol(av[2]) * 1e3; //* 1e3 = 1000
-	data->time_to_eat = philo_atol(av[3]) * 1e3;
-	data->time_to_sleep = philo_atol(av[4]) * 1e3;
-	if (data->time_to_die < 1e4 || data->time_to_eat < 1e4
-		|| data->time_to_sleep < 1e4)
+	data->time_to_die = philo_atol(av[2]) * CONVERSION_RATE_TO_MS; //* 1e3 = 1000
+	data->time_to_eat = philo_atol(av[3]) * CONVERSION_RATE_TO_MS;
+	data->time_to_sleep = philo_atol(av[4]) * CONVERSION_RATE_TO_MS;
+	if (data->time_to_die < MIN_TIME || data->time_to_eat < MIN_TIME
+		|| data->time_to_sleep < MIN_TIME)
 	{
 		error_exit(RED"Timestamp lower than 10ms"RESET);
 	}

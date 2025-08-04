@@ -6,16 +6,31 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 17:35:32 by misoares          #+#    #+#             */
-/*   Updated: 2025/08/04 15:26:00 by misoares         ###   ########.fr       */
+/*   Updated: 2025/08/04 16:27:24 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-static	void	thinking(t_philo *philo)
+void	thinking(t_philo *philo, bool pre_sim)
 {
-	write_status(THINKING, philo, false);
+	long t_eat;
+	long t_sleep;
+	long t_think;
+	
+	if (!pre_sim)
+		write_status(THINKING, philo, false);
+	if (philo->data->philo_nbr % 2 == 0) // if system is even -- dont care
+		return;
+	// ODD not fair
+	t_eat = philo->data->time_to_eat;
+	t_sleep = philo->data->time_to_sleep;
+	t_think = t_eat * 2 - t_sleep;
+	if (t_think < 0)
+		t_think = 0;
+	precise_usleep(t_think * THINKING_PERCENTAGE, philo->data);
 }
+
 
 void	*single_philo(void *arg)
 {
@@ -27,7 +42,7 @@ void	*single_philo(void *arg)
 	increase_long(&philo->data->data_mutex, &philo->data->threads_running_nbr);
 	write_status(TAKE_FIRST_FORK, philo, false);
 	while (!simulation_done(philo->data))
-		usleep(200);
+		usleep(SINGLE_PHILO_SLEEP_US);
 	return (NULL);
 }
 
@@ -60,9 +75,8 @@ void	*dinner_sim(void *data)
 	set_long(&philo->philo_mutex, &philo->last_mealtime, gettime(MILLISECOND)); // set time last meal
 	//sync with monitor
 	increase_long(&philo->data->data_mutex, &philo->data->threads_running_nbr);
-
+	desync_philos(philo);
 	set_long(&philo->philo_mutex, &philo->last_mealtime, gettime(MILLISECOND));
-
 	//set last meal time
 	while (!simulation_done(philo->data))
 	{
@@ -74,10 +88,8 @@ void	*dinner_sim(void *data)
 		write_status(SLEEPING, philo, false);
 		precise_usleep(philo->data->time_to_sleep, philo->data);
 
-		thinking(philo);
+		thinking(philo, false);
 	}
-
-
 	return (NULL);
 }
 

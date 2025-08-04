@@ -6,7 +6,7 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 12:54:15 by misoares          #+#    #+#             */
-/*   Updated: 2025/08/04 15:35:49 by misoares         ###   ########.fr       */
+/*   Updated: 2025/08/04 16:28:51 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,10 @@
 
 #define OFFSET 48
 #define MAX_PHILOS 250
+#define MIN_TIME 1e4
+#define THINKING_PERCENTAGE 0.42
+#define SINGLE_PHILO_SLEEP_US 200
+#define CONVERSION_RATE_TO_MS 1e3
 
 
 /*
@@ -166,6 +170,7 @@ void	init_data(t_data *data);
 //SIMULATION
 void	start_simulation(t_data *data);
 void	*monitor_dinner(void *data);
+void	thinking(t_philo *philo, bool pre_sim);
 
 // SETTERS & GETTERS
 void	set_bool(t_mutex *mutex, bool *dest, bool value);
@@ -178,6 +183,7 @@ bool	simulation_done(t_data *data);
 void	wait_threads(t_data *data);
 void	increase_long(t_mutex *mutex, long *value);
 bool	all_threads_running(t_mutex *mutex, long *threads, long philo_nbr);
+void	desync_philos(t_philo *philo);
 
 //Normal UTILS
 long	gettime(t_timecode timecode);

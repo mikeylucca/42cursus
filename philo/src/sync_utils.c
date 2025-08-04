@@ -6,7 +6,7 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 18:12:46 by misoares          #+#    #+#             */
-/*   Updated: 2025/08/04 14:54:23 by misoares         ###   ########.fr       */
+/*   Updated: 2025/08/04 16:13:09 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,20 @@ void	increase_long(t_mutex *mutex, long *value)
 	mutex_handler(mutex, LOCK);
 	(*value)++;
 	mutex_handler(mutex, UNLOCK);
+}
+
+/* Try to make the system fair to odd number */
+
+void	desync_philos(t_philo *philo)
+{
+	if (philo->data->philo_nbr % 2 == 0)
+	{
+		if (philo->id % 2 == 0)
+			precise_usleep(MIN_TIME, philo->data);
+	}
+	else
+	{
+		if (philo->id % 2)
+			thinking(philo, true);
+	}
 }
