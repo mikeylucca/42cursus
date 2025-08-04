@@ -6,7 +6,7 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 17:57:09 by misoares          #+#    #+#             */
-/*   Updated: 2025/08/04 19:39:25 by misoares         ###   ########.fr       */
+/*   Updated: 2025/08/04 21:08:52 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,10 @@ long	get_meal_counter(t_philo *philo)
 bool	simulation_done(t_data *data)
 {
 	return (get_bool(&data->data_mutex, &data->end_simulation));
+}
+
+// Faster version for tight loops - use sparingly and only when performance critical
+bool	simulation_done_unsafe(t_data *data)
+{
+	return (data->end_simulation);
 }

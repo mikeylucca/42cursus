@@ -6,7 +6,7 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 12:54:15 by misoares          #+#    #+#             */
-/*   Updated: 2025/08/04 19:39:42 by misoares         ###   ########.fr       */
+/*   Updated: 2025/08/04 21:08:53 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,6 +179,7 @@ bool	get_bool(t_mutex *mutex, bool *value);
 void	set_long(t_mutex *mutex, long *dest, long value);
 long	get_long(t_mutex *mutex, long *value);
 bool	simulation_done(t_data *data);
+bool	simulation_done_unsafe(t_data *data);
 long	get_meal_counter(t_philo *philo);
 
 // SYNC Utils

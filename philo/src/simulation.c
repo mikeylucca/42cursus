@@ -6,7 +6,7 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 17:35:32 by misoares          #+#    #+#             */
-/*   Updated: 2025/08/04 20:13:51 by misoares         ###   ########.fr       */
+/*   Updated: 2025/08/04 21:17:22 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,8 @@ void	thinking(t_philo *philo, bool pre_sim)
 	
 	if (!pre_sim)
 		write_status(THINKING, philo, false);
-	if (philo->data->philo_nbr % 2 == 0) // if system is even -- dont care
+	if (philo->data->philo_nbr % 2 == 0)
 		return;
-	// ODD not fair
 	t_eat = philo->data->time_to_eat;
 	t_sleep = philo->data->time_to_sleep;
 	t_think = t_eat * 2 - t_sleep;
@@ -68,28 +67,23 @@ static	void	eat(t_philo *philo)
 void	*dinner_sim(void *data)
 {
 	t_philo *philo;
-
+	
 	philo = (t_philo *)data;
-
+	
 	wait_threads(philo->data);
-
-	set_long(&philo->philo_mutex, &philo->last_mealtime, gettime(MILLISECOND)); // set time last meal
-	//sync with monitor
+	set_long(&philo->philo_mutex, &philo->last_mealtime, gettime(MILLISECOND));
 	increase_long(&philo->data->data_mutex, &philo->data->threads_running_nbr);
 	desync_philos(philo);
-	//set_long(&philo->philo_mutex, &philo->last_mealtime, gettime(MILLISECOND));
-	//set last meal time
-	while (!simulation_done(philo->data))
+	bool sim_done = false;
+	while (!sim_done)
 	{
 		if (get_bool(&philo->philo_mutex, &philo->full))
 			break;
 		eat(philo);
-
-		//SLEEP
 		write_status(SLEEPING, philo, false);
 		precise_usleep(philo->data->time_to_sleep, philo->data);
-
 		thinking(philo, false);
+		sim_done = simulation_done(philo->data);
 	}
 	return (NULL);
 }
@@ -110,14 +104,9 @@ void	start_simulation(t_data *data)
 			thread_handler(&data->philos[i].thread_id, dinner_sim, &data->philos[i], CREATE);
 		}
 	}
-	// Monitor thread
 	thread_handler(&data->monitor, monitor_dinner, data, CREATE);
-	// START of SIM
 	set_long(&data->data_mutex, &data->start_simulation, gettime(MILLISECOND));
-	// All threads made
 	set_bool(&data->data_mutex, &data->threads_ready, true);
-	
-	// WAIT FOR ALL
 	i = -1;
 	while (++i < data->philo_nbr)
 		thread_handler(&data->philos[i].thread_id, NULL, NULL, JOIN);

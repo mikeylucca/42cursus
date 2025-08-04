@@ -6,7 +6,7 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 13:01:46 by misoares          #+#    #+#             */
-/*   Updated: 2025/08/04 15:32:16 by misoares         ###   ########.fr       */
+/*   Updated: 2025/08/04 21:15:28 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 int main(int ac, char **av)
 {
 	t_data data;
-
 
 	if (ac == 5 || ac == 6)
 	{

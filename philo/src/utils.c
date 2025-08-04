@@ -6,7 +6,7 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 13:52:43 by misoares          #+#    #+#             */
-/*   Updated: 2025/08/04 15:37:25 by misoares         ###   ########.fr       */
+/*   Updated: 2025/08/04 21:08:50 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,11 @@ void	precise_usleep(long usec, t_data *data)
 	long start;
 	long elapsed;
 	long remain;
+	long check_counter = 0;
 
 	start = gettime(MICROSECOND);
 	while (gettime(MICROSECOND) - start < usec)
 	{
-		if (simulation_done(data))
-			break;
 		elapsed = gettime(MICROSECOND) - start;
 		remain = usec - elapsed;
 		if (remain > 1e3)
@@ -66,7 +65,12 @@ void	precise_usleep(long usec, t_data *data)
 		else
 		{
 			while (gettime(MICROSECOND) - start < usec)
-				;
+			{
+				// Use unsafe version for maximum performance in tight loops
+				check_counter++;
+				if (check_counter % 50000 == 0 && simulation_done_unsafe(data))
+					break;
+			}
 		}
 	}
 }

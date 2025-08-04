@@ -6,7 +6,7 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 13:01:41 by misoares          #+#    #+#             */
-/*   Updated: 2025/08/04 20:14:53 by misoares         ###   ########.fr       */
+/*   Updated: 2025/08/04 21:15:42 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,10 @@ static void	fork_assign(t_philo *philo, t_fork *forks, int pos)
 	int philo_nbr;
 
 	philo_nbr = philo->data->philo_nbr;
-	
-	// Assign forks in order of their IDs to prevent deadlock
-	// Lower ID fork is always first_fork
+
 	philo->first_fork = &forks[pos];
 	philo->second_fork = &forks[(pos + 1) % philo_nbr];
-	
-	// For the last philosopher, swap if necessary to maintain ID ordering
+
 	if (philo->first_fork->fork_id > philo->second_fork->fork_id)
 	{
 		t_fork *temp = philo->first_fork;
