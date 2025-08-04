@@ -6,7 +6,7 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 13:01:41 by misoares          #+#    #+#             */
-/*   Updated: 2025/08/04 14:48:06 by misoares         ###   ########.fr       */
+/*   Updated: 2025/08/04 20:14:53 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,17 @@ static void	fork_assign(t_philo *philo, t_fork *forks, int pos)
 
 	philo_nbr = philo->data->philo_nbr;
 	
-	// Fix the logic - ensure proper odd/even assignment
-	if (philo->id % 2 == 0) // Even philosophers
+	// Assign forks in order of their IDs to prevent deadlock
+	// Lower ID fork is always first_fork
+	philo->first_fork = &forks[pos];
+	philo->second_fork = &forks[(pos + 1) % philo_nbr];
+	
+	// For the last philosopher, swap if necessary to maintain ID ordering
+	if (philo->first_fork->fork_id > philo->second_fork->fork_id)
 	{
-		philo->first_fork = &forks[pos];
-		philo->second_fork = &forks[(pos + 1) % philo_nbr];
-	}
-	else // Odd philosophers - reverse order
-	{
-		philo->first_fork = &forks[(pos + 1) % philo_nbr];
-		philo->second_fork = &forks[pos];
+		t_fork *temp = philo->first_fork;
+		philo->first_fork = philo->second_fork;
+		philo->second_fork = temp;
 	}
 }
 

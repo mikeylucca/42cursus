@@ -6,7 +6,7 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 17:57:09 by misoares          #+#    #+#             */
-/*   Updated: 2025/08/03 18:11:32 by misoares         ###   ########.fr       */
+/*   Updated: 2025/08/04 19:39:25 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,11 @@ long    get_long(t_mutex *mutex, long *value)
 	ret = *value;
 	mutex_handler(mutex, UNLOCK);
 	return (ret);
+}
+
+long	get_meal_counter(t_philo *philo)
+{
+	return (get_long(&philo->philo_mutex, &philo->meal_counter));
 }
 
 /* REDUNDANT */

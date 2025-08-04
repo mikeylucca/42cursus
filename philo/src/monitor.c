@@ -6,7 +6,7 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 14:42:59 by misoares          #+#    #+#             */
-/*   Updated: 2025/08/04 15:31:57 by misoares         ###   ########.fr       */
+/*   Updated: 2025/08/04 19:37:56 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ static bool	philo_died(t_philo *philo)
 		return (false);
 
 	elapsed = gettime(MILLISECOND) - get_long(&philo->philo_mutex, &philo->last_mealtime);
-	t_to_die = philo->data->time_to_die / 1e3;
+	t_to_die = philo->data->time_to_die / CONVERSION_RATE_TO_MS;
 
 	if (elapsed > t_to_die)
 		return (true);
-	else
+	else	
 		return (false);
 }
 
@@ -35,7 +35,6 @@ void	*monitor_dinner(void *data)
 	t_data *pData;
 
 	pData = (t_data *)data;
-	
 	// check all philos running -- spinlock till all threads run
 	while (!all_threads_running(&pData->data_mutex, &pData->threads_running_nbr, pData->philo_nbr))
 		;
@@ -48,8 +47,10 @@ void	*monitor_dinner(void *data)
 			{
 				set_bool(&pData->data_mutex, &pData->end_simulation, true);
 				write_status(DIED, pData->philos + i, false);
+				return (NULL);
 			}
 		}
+	usleep(1000);
 	}
 	return (NULL);
 }

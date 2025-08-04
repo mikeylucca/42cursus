@@ -6,7 +6,7 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 14:19:09 by misoares          #+#    #+#             */
-/*   Updated: 2025/08/04 16:28:59 by misoares         ###   ########.fr       */
+/*   Updated: 2025/08/04 16:38:36 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,11 +80,9 @@ void	input_parse(t_data *data, char **av)
 		error_exit(RED"Timestamp lower than 10ms"RESET);
 	}
 	if (data->philo_nbr > MAX_PHILOS)
-	{
 		error_exit(RED"Maximum amount of Philos is 250"RESET);
-	}
 	if (av[5])
-	{
 		data->max_meals = philo_atol(av[5]);
-	}
+	else
+		data->max_meals = -1;
 }

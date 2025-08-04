@@ -6,7 +6,7 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 17:35:32 by misoares          #+#    #+#             */
-/*   Updated: 2025/08/04 16:27:24 by misoares         ###   ########.fr       */
+/*   Updated: 2025/08/04 20:13:51 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,16 +52,17 @@ static	void	eat(t_philo *philo)
 	write_status(TAKE_FIRST_FORK, philo, false);
 	mutex_handler(&philo->second_fork->fork, LOCK);
 	write_status(TAKE_SECOND_FORK, philo, false);
-
+	
 	set_long(&philo->philo_mutex, &philo->last_mealtime, gettime(MILLISECOND));
-	philo->meal_counter++;
+	increase_long(&philo->philo_mutex, &philo->meal_counter);
 	write_status(EATING, philo, false);
 	precise_usleep(philo->data->time_to_eat, philo->data);
-	if (philo->data->max_meals > 0 && philo->meal_counter == philo->data->max_meals)
+	//set_long(&philo->philo_mutex, &philo->last_mealtime, gettime(MILLISECOND));
+	if (philo->data->max_meals > 0 && get_meal_counter(philo) == philo->data->max_meals)
 		set_bool(&philo->philo_mutex, &philo->full, true);
-	
-	mutex_handler(&philo->first_fork->fork, UNLOCK);
+
 	mutex_handler(&philo->second_fork->fork, UNLOCK);
+	mutex_handler(&philo->first_fork->fork, UNLOCK);
 }
 
 void	*dinner_sim(void *data)
@@ -76,11 +77,11 @@ void	*dinner_sim(void *data)
 	//sync with monitor
 	increase_long(&philo->data->data_mutex, &philo->data->threads_running_nbr);
 	desync_philos(philo);
-	set_long(&philo->philo_mutex, &philo->last_mealtime, gettime(MILLISECOND));
+	//set_long(&philo->philo_mutex, &philo->last_mealtime, gettime(MILLISECOND));
 	//set last meal time
 	while (!simulation_done(philo->data))
 	{
-		if (philo->full)
+		if (get_bool(&philo->philo_mutex, &philo->full))
 			break;
 		eat(philo);
 
@@ -112,7 +113,7 @@ void	start_simulation(t_data *data)
 	// Monitor thread
 	thread_handler(&data->monitor, monitor_dinner, data, CREATE);
 	// START of SIM
-	data->start_simulation = gettime(MILLISECOND);
+	set_long(&data->data_mutex, &data->start_simulation, gettime(MILLISECOND));
 	// All threads made
 	set_bool(&data->data_mutex, &data->threads_ready, true);
 	

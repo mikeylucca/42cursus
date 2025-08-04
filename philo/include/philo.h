@@ -6,7 +6,7 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 12:54:15 by misoares          #+#    #+#             */
-/*   Updated: 2025/08/04 16:28:51 by misoares         ###   ########.fr       */
+/*   Updated: 2025/08/04 19:39:42 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,12 @@
 #include "../libraries/libft/libft.h"
 
 #define OFFSET 48
-#define MAX_PHILOS 250
-#define MIN_TIME 1e4
+#define MAX_PHILOS 200
+#define MIN_TIME 6e4
 #define THINKING_PERCENTAGE 0.42
 #define SINGLE_PHILO_SLEEP_US 200
-#define CONVERSION_RATE_TO_MS 1e3
+#define CONVERSION_RATE_TO_MS 1000
+#define MONITOR_DELAY 1000
 
 
 /*
@@ -178,6 +179,7 @@ bool	get_bool(t_mutex *mutex, bool *value);
 void	set_long(t_mutex *mutex, long *dest, long value);
 long	get_long(t_mutex *mutex, long *value);
 bool	simulation_done(t_data *data);
+long	get_meal_counter(t_philo *philo);
 
 // SYNC Utils
 void	wait_threads(t_data *data);
