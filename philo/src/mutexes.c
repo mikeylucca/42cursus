@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   wrap_stuff.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: misoares <misoares@student.42lisboa.com>   #+#  +:+       +#+        */
+/*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-06-15 15:47:17 by misoares          #+#    #+#             */
-/*   Updated: 2025-06-15 15:47:17 by misoares         ###   ########.fr       */
+/*   Created: 2025/06/15 15:47:17 by misoares          #+#    #+#             */
+/*   Updated: 2025/08/03 22:05:40 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-void    *s_malloc(size_t bytes)
+void	*s_malloc(size_t bytes)
 {
-	void    *ret;
+	void	*ret;
 
 	ret = malloc(bytes);
 	if (!ret)

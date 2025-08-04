@@ -6,7 +6,7 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 13:01:41 by misoares          #+#    #+#             */
-/*   Updated: 2025/08/03 19:47:45 by misoares         ###   ########.fr       */
+/*   Updated: 2025/08/04 14:48:06 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,21 +17,21 @@
 */
 static void	fork_assign(t_philo *philo, t_fork *forks, int pos)
 {
-    int philo_nbr;
+	int philo_nbr;
 
-    philo_nbr = philo->data->philo_nbr;
-    
-    // Fix the logic - ensure proper odd/even assignment
-    if (philo->id % 2 == 0) // Even philosophers
-    {
-        philo->first_fork = &forks[pos];
-        philo->second_fork = &forks[(pos + 1) % philo_nbr];
-    }
-    else // Odd philosophers - reverse order
-    {
-        philo->first_fork = &forks[(pos + 1) % philo_nbr];
-        philo->second_fork = &forks[pos];
-    }
+	philo_nbr = philo->data->philo_nbr;
+	
+	// Fix the logic - ensure proper odd/even assignment
+	if (philo->id % 2 == 0) // Even philosophers
+	{
+		philo->first_fork = &forks[pos];
+		philo->second_fork = &forks[(pos + 1) % philo_nbr];
+	}
+	else // Odd philosophers - reverse order
+	{
+		philo->first_fork = &forks[(pos + 1) % philo_nbr];
+		philo->second_fork = &forks[pos];
+	}
 }
 
 static void	init_philo(t_data *data)
@@ -54,14 +54,15 @@ static void	init_philo(t_data *data)
 	
 }
 
-void    init_data(t_data *data)
+void	init_data(t_data *data)
 {
 	int i;
 
 	i = -1;
-    data->end_simulation = false;
+	data->end_simulation = false;
 	data->threads_ready = false;
-    data->philos = s_malloc(sizeof(t_philo) * data->philo_nbr);
+	data->threads_running_nbr = 0;
+	data->philos = s_malloc(sizeof(t_philo) * data->philo_nbr);
 	mutex_handler(&data->data_mutex, INIT);
 	mutex_handler(&data->write_mutex, INIT);
 	data->forks = s_malloc(sizeof(t_fork) * data->philo_nbr);

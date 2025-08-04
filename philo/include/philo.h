@@ -6,7 +6,7 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 12:54:15 by misoares          #+#    #+#             */
-/*   Updated: 2025/08/03 21:57:04 by misoares         ###   ########.fr       */
+/*   Updated: 2025/08/04 15:35:49 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,10 +145,12 @@ struct s_data
 	t_fork	*forks; // all forks
 	t_philo *philos; // all philosofers
 	bool	threads_ready; // sync philos
+	pthread_t monitor;
+	long	threads_running_nbr;
 };
 
 //ERROR
-void    error_exit(const char *error);
+void	error_exit(const char *error);
 
 //PARSER
 void	input_parse(t_data *data, char **av);
@@ -159,26 +161,29 @@ void	thread_handler(pthread_t *thread, void *(*foo)(void *), void *data, t_opcod
 void	mutex_handler(t_mutex *mutex, t_opcode opcode);
 
 // INIT
-void    init_data(t_data *data);
+void	init_data(t_data *data);
 
 //SIMULATION
-void    start_simulation(t_data *data);
+void	start_simulation(t_data *data);
+void	*monitor_dinner(void *data);
 
 // SETTERS & GETTERS
-void    set_bool(t_mutex *mutex, bool *dest, bool value);
-bool    get_bool(t_mutex *mutex, bool *value);
-void    set_long(t_mutex *mutex, long *dest, long value);
-long    get_long(t_mutex *mutex, long *value);
+void	set_bool(t_mutex *mutex, bool *dest, bool value);
+bool	get_bool(t_mutex *mutex, bool *value);
+void	set_long(t_mutex *mutex, long *dest, long value);
+long	get_long(t_mutex *mutex, long *value);
 bool	simulation_done(t_data *data);
 
 // SYNC Utils
-void    wait_threads(t_data *data);
+void	wait_threads(t_data *data);
+void	increase_long(t_mutex *mutex, long *value);
+bool	all_threads_running(t_mutex *mutex, long *threads, long philo_nbr);
 
 //Normal UTILS
 long	gettime(t_timecode timecode);
 void	precise_usleep(long usec, t_data *data);
 void	write_status(t_status status, t_philo *philo, bool debug);
-
+void	cleaner(t_data *data);
 
 
 #endif

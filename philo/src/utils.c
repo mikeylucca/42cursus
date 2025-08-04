@@ -6,11 +6,28 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 13:52:43 by misoares          #+#    #+#             */
-/*   Updated: 2025/08/03 18:41:06 by misoares         ###   ########.fr       */
+/*   Updated: 2025/08/04 15:37:25 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
+
+void	cleaner(t_data *data)
+{
+	t_philo *philo;
+	int i;
+
+	i = -1;
+	while (data->philo_nbr > ++i)
+	{
+		philo = data->philos + i;
+		mutex_handler(&philo->philo_mutex, DESTROY);
+	}
+	mutex_handler(&data->write_mutex, DESTROY);
+	mutex_handler(&data->data_mutex, DESTROY);
+	free(data->forks);
+	free(data->philos);
+}
 
 long	gettime(t_timecode timecode)
 {
@@ -45,14 +62,13 @@ void	precise_usleep(long usec, t_data *data)
 		elapsed = gettime(MICROSECOND) - start;
 		remain = usec - elapsed;
 		if (remain > 1e3)
-			usleep(usec / 2);
+			usleep(remain / 2);
 		else
 		{
 			while (gettime(MICROSECOND) - start < usec)
 				;
 		}
 	}
-	
 }
 
 void    error_exit(const char *error)
