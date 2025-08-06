@@ -1,15 +1,4 @@
 #!/usr/bin/env python3
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    my_tester.py                                       :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/08/04 23:03:35 by misoares          #+#    #+#              #
-#    Updated: 2025/08/04 23:03:37 by misoares         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
 
 import subprocess
 import sys
@@ -42,15 +31,26 @@ class PhiloTester:
 		self.count_false_all = 0
 		self.fails_dir = "fails/"
 		
-		# Create fails directory if it doesn't exist
+		# Create fails directory if it doesn't exist, or clean it if it does
 		if not os.path.exists(self.fails_dir):
 			os.makedirs(self.fails_dir)
+		else:
+			# Delete all existing log files in the fails directory
+			for filename in os.listdir(self.fails_dir):
+				if filename.endswith('.log'):
+					os.remove(os.path.join(self.fails_dir, filename))
 	
 	def cleanup(self):
 		"""Clean up fails directory if empty"""
 		try:
-			if os.path.exists(self.fails_dir) and not os.listdir(self.fails_dir):
-				os.rmdir(self.fails_dir)
+			if os.path.exists(self.fails_dir):
+				# Check if directory is empty or only contains .log files
+				files = os.listdir(self.fails_dir)
+				if not files:
+					os.rmdir(self.fails_dir)
+				elif len(files) > 0:
+					log_files = [f for f in files if f.endswith('.log')]
+					print(f"{Colors.CYAN}Failed test logs saved in {self.fails_dir} ({len(log_files)} files){Colors.RESET}")
 		except:
 			pass
 	
@@ -65,12 +65,13 @@ class PhiloTester:
 		except Exception as e:
 			return f"ERROR: {str(e)}"
 	
-	def print_loading_bar(self, progress):
-		"""Print a loading bar"""
+	def print_loading_bar(self, current, total, passed, failed):
+		"""Print an improved loading bar with test progress"""
 		bar_length = 30
-		filled_length = int(bar_length * progress // 100)
-		bar = '#' * filled_length + '-' * (bar_length - filled_length)
-		print(f"\rLOADING [{bar}] {progress:.1f}%", end='', flush=True)
+		progress = (current / total) * 100
+		filled_length = int(bar_length * current // total)
+		bar = '█' * filled_length + '░' * (bar_length - filled_length)
+		print(f"\rProgress [{bar}] {current}/{total} ({progress:.1f}%) | ✓ {passed} ✗ {failed}", end='', flush=True)
 	
 	def test_case(self, test_args, should_die=True, test_name=""):
 		"""Run a test case multiple times"""
@@ -82,8 +83,7 @@ class PhiloTester:
 			print(f"\t{Colors.CYAN}{test_name}{Colors.RESET}")
 		
 		for i in range(1, self.iterations + 1):
-			progress = (i / self.iterations) * 100
-			self.print_loading_bar(progress)
+			self.print_loading_bar(i, self.iterations, count_correct, count_false)
 			
 			output = self.run_philo_test(test_args)
 			
@@ -93,40 +93,56 @@ class PhiloTester:
 			if should_die:
 				# Test expects death
 				if died:
-					print(f"\r{i}\t{Colors.GREEN}Pass{Colors.RESET}\t{Colors.GREEN}[✓]{Colors.RESET}\t{output.split(chr(10))[-1] if output else 'died'}")
 					count_correct += 1
 					self.count_correct_all += 1
 				else:
-					print(f"\r{i}\t{Colors.RED}Fail{Colors.RESET}\t{Colors.RED}[x]{Colors.RESET}\t{output.split(chr(10))[-1] if output else 'no death'}")
-					# Save failed test
-					filename = f"{self.fails_dir}{'-'.join(map(str, test_args))}_{i}"
-					with open(filename, 'w') as f:
-						f.write(output)
+					# Save failed test to .log file
+					log_filename = f"{self.fails_dir}{'-'.join(map(str, test_args))}_{i}.log"
+					with open(log_filename, 'w') as f:
+						f.write(f"Test case: {' '.join(map(str, test_args))}\n")
+						f.write(f"Expected: Death\n")
+						f.write(f"Actual: No death\n")
+						f.write(f"Iteration: {i}\n")
+						f.write(f"Timestamp: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
+						f.write("-" * 50 + "\n")
+						f.write("OUTPUT:\n")
+						f.write(output if output else "No output")
 					count_false += 1
 					self.count_false_all += 1
 			else:
 				# Test expects no death
 				if not died and output != "TIMEOUT":
-					print(f"\r{i}\t{Colors.GREEN}Pass{Colors.RESET}\t{Colors.GREEN}[✓]{Colors.RESET}\t{output.split(chr(10))[-1] if output else 'completed'}")
 					count_correct += 1
 					self.count_correct_all += 1
 				else:
-					print(f"\r{i}\t{Colors.RED}Fail{Colors.RESET}\t{Colors.RED}[x]{Colors.RESET}\t{output.split(chr(10))[-1] if output else 'unexpected death/timeout'}")
-					# Save failed test
-					filename = f"{self.fails_dir}{'-'.join(map(str, test_args))}_{i}"
-					with open(filename, 'w') as f:
-						f.write(output)
+					# Save failed test to .log file
+					log_filename = f"{self.fails_dir}{'-'.join(map(str, test_args))}_{i}.log"
+					with open(log_filename, 'w') as f:
+						f.write(f"Test case: {' '.join(map(str, test_args))}\n")
+						f.write(f"Expected: No death\n")
+						f.write(f"Actual: {'Death' if died else 'Timeout'}\n")
+						f.write(f"Iteration: {i}\n")
+						f.write(f"Timestamp: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
+						f.write("-" * 50 + "\n")
+						f.write("OUTPUT:\n")
+						f.write(output if output else "No output")
 					count_false += 1
 					self.count_false_all += 1
 		
-		# Print percentage
+		# Clear the progress bar line and print final result
+		print(f"\r{' ' * 80}", end='')  # Clear the line
+		
+		# Print test summary
 		percent = (count_correct / self.iterations) * 100
-		if percent > 89:
-			print(f"\t{Colors.OK_BOLD}{percent:.0f} % correct{Colors.RESET}")
-		elif percent > 69:
-			print(f"\t{Colors.WARN_BOLD}{percent:.0f} % correct{Colors.RESET}")
+		result_line = f"\r\t✓ {count_correct}/{self.iterations} passed ({percent:.0f}%)"
+		
+		if percent == 100:
+			print(f"{result_line} {Colors.OK_BOLD}[PASS]{Colors.RESET}")
 		else:
-			print(f"\t{Colors.ERROR_BOLD}{percent:.0f} % correct{Colors.RESET}")
+			print(f"{result_line} {Colors.ERROR_BOLD}[FAIL]{Colors.RESET}")
+		
+		if count_false > 0:
+			print(f"\t{Colors.RED}✗ {count_false} failures saved to {self.fails_dir}*.log{Colors.RESET}")
 		
 		print("____________________________________________")
 	
@@ -252,12 +268,24 @@ class PhiloTester:
 		print(f"Testing: {' '.join(map(str, args))} (20 iterations)")
 		
 		for i in range(20):
+			self.print_loading_bar(i + 1, 20, 20 - death_count, death_count)
 			output = self.run_philo_test(args)
 			if "died" in output.lower():
 				death_count += 1
-			print(f"Test {i+1}/20: {'DIED' if 'died' in output.lower() else 'COMPLETED'}")
+				# Save death case to log file
+				log_filename = f"{self.fails_dir}single-test-{'-'.join(map(str, args))}_{i+1}.log"
+				with open(log_filename, 'w') as f:
+					f.write(f"Single test case: {' '.join(map(str, args))}\n")
+					f.write(f"Death occurred\n")
+					f.write(f"Iteration: {i+1}/20\n")
+					f.write(f"Timestamp: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
+					f.write("-" * 50 + "\n")
+					f.write("OUTPUT:\n")
+					f.write(output if output else "No output")
 		
-		print(f"\nResult: {death_count}/20 tests resulted in death")
+		print(f"\n\nResult: {death_count}/20 tests resulted in death")
+		if death_count > 0:
+			print(f"{Colors.YELLOW}Death cases saved to {self.fails_dir}single-test-*.log{Colors.RESET}")
 		return death_count
 	
 	def print_final_results(self):
@@ -266,12 +294,10 @@ class PhiloTester:
 		if total_tests > 0:
 			percent = (self.count_correct_all / total_tests) * 100
 			print(f"\n{Colors.BOLD}RESULT: passed: {self.count_correct_all}\tfailed: {self.count_false_all}{Colors.RESET}")
-			if percent > 89:
-				print(f"\t{Colors.OK_BOLD}{percent:.0f} % correct{Colors.RESET}")
-			elif percent > 69:
-				print(f"\t{Colors.WARN_BOLD}{percent:.0f} % correct{Colors.RESET}")
+			if percent == 100:
+				print(f"\t{Colors.OK_BOLD}{percent:.0f}% - ALL TESTS PASSED!{Colors.RESET}")
 			else:
-				print(f"\t{Colors.ERROR_BOLD}{percent:.0f} % correct{Colors.RESET}")
+				print(f"\t{Colors.ERROR_BOLD}{percent:.0f}% - SOME TESTS FAILED{Colors.RESET}")
 		
 		self.cleanup()
 

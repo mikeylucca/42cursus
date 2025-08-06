@@ -6,7 +6,7 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 13:52:43 by misoares          #+#    #+#             */
-/*   Updated: 2025/08/04 21:08:50 by misoares         ###   ########.fr       */
+/*   Updated: 2025/08/06 21:35:29 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,10 @@ long	gettime(t_timecode timecode)
 	struct timeval tv;
 
 	if (gettimeofday(&tv, NULL))
-		error_exit("Gettimeofday failed");
+	{
+		error_return("Gettimeofday failed");
+		return (-1);
+	}
 	if (SECOND == timecode)
 		return (tv.tv_sec + (tv.tv_usec / 1e6));
 	else if (MILLISECOND == timecode)
@@ -42,8 +45,7 @@ long	gettime(t_timecode timecode)
 	else if (MICROSECOND == timecode)
 		return ((tv.tv_sec * 1e6) + tv.tv_usec);
 	else
-		error_exit("Wrong input to gettime");
-	return (1337);
+		return (-1);
 }
 
 // Precise usleep cause the normal one can give more than what is asked
@@ -75,8 +77,8 @@ void	precise_usleep(long usec, t_data *data)
 	}
 }
 
-void    error_exit(const char *error)
+int	error_return(const char *error)
 {
 	printf(RED "%s\n" RESET, error);
-	exit(EXIT_FAILURE);
+	return(-1);
 }

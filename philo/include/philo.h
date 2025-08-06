@@ -6,7 +6,7 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 12:54:15 by misoares          #+#    #+#             */
-/*   Updated: 2025/08/04 21:08:53 by misoares         ###   ########.fr       */
+/*   Updated: 2025/08/06 21:35:29 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,18 +155,19 @@ struct s_data
 };
 
 //ERROR
-void	error_exit(const char *error);
+int		error_return(const char *error);
 
 //PARSER
-void	input_parse(t_data *data, char **av);
+int		input_parse(t_data *data, char **av);
 
 //SAFE FUNCTIONS - Embedded checks
 void	*s_malloc(size_t bytes);
-void	thread_handler(pthread_t *thread, void *(*foo)(void *), void *data, t_opcode opcode);
-void	mutex_handler(t_mutex *mutex, t_opcode opcode);
+int		thread_handler(pthread_t *thread, void *(*foo)(void *), void *data, t_opcode opcode);
+int		mutex_handler(t_mutex *mutex, t_opcode opcode);
 
 // INIT
-void	init_data(t_data *data);
+//INIT
+int		init_data(t_data *data);
 
 //SIMULATION
 void	start_simulation(t_data *data);

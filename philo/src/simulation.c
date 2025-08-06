@@ -6,7 +6,7 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 17:35:32 by misoares          #+#    #+#             */
-/*   Updated: 2025/08/04 21:17:22 by misoares         ###   ########.fr       */
+/*   Updated: 2025/08/06 22:33:59 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,26 +91,30 @@ void	*dinner_sim(void *data)
 void	start_simulation(t_data *data)
 {
 	int i;
+	long start_time;
 
 	i = -1;
 	if (data->max_meals == 0)
 		return;
 	else if (data->philo_nbr == 1)
-		thread_handler(&data->philos[0].thread_id, single_philo, &data->philos[0], CREATE);
-	else
 	{
-		while (data->philo_nbr > ++i)
-		{
-			thread_handler(&data->philos[i].thread_id, dinner_sim, &data->philos[i], CREATE);
-		}
+		if (thread_handler(&data->philos[0].thread_id, single_philo, &data->philos[0], CREATE) != 0)
+			return;
 	}
-	thread_handler(&data->monitor, monitor_dinner, data, CREATE);
-	set_long(&data->data_mutex, &data->start_simulation, gettime(MILLISECOND));
+	else
+		while (data->philo_nbr > ++i)
+			if (thread_handler(&data->philos[i].thread_id, dinner_sim, &data->philos[i], CREATE) != 0)
+				return;
+	if (thread_handler(&data->monitor, monitor_dinner, data, CREATE) != 0)
+		return;
+	start_time = gettime(MILLISECOND);
+	if (start_time == -1)
+		return;
+	set_long(&data->data_mutex, &data->start_simulation, start_time);
 	set_bool(&data->data_mutex, &data->threads_ready, true);
 	i = -1;
 	while (++i < data->philo_nbr)
 		thread_handler(&data->philos[i].thread_id, NULL, NULL, JOIN);
-	// if reach this line, all philos == full
 	set_bool(&data->data_mutex, &data->end_simulation, true);
 	thread_handler(&data->monitor, NULL, NULL, JOIN);
 }

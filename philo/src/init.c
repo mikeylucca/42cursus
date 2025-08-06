@@ -6,7 +6,7 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 13:01:41 by misoares          #+#    #+#             */
-/*   Updated: 2025/08/04 21:15:42 by misoares         ###   ########.fr       */
+/*   Updated: 2025/08/06 21:35:29 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void	fork_assign(t_philo *philo, t_fork *forks, int pos)
 	}
 }
 
-static void	init_philo(t_data *data)
+static int	init_philo(t_data *data)
 {
 	int i;
 	t_philo *philo;
@@ -45,14 +45,15 @@ static void	init_philo(t_data *data)
 		philo->full = false;
 		philo->meal_counter = 0;
 		philo->data = data;
-		mutex_handler(&philo->philo_mutex, INIT);
+		if (mutex_handler(&philo->philo_mutex, INIT) != 0)
+			return (-1);
 
 		fork_assign(philo, data->forks, i);
 	}
-	
+	return (0);
 }
 
-void	init_data(t_data *data)
+int	init_data(t_data *data)
 {
 	int i;
 
@@ -61,13 +62,22 @@ void	init_data(t_data *data)
 	data->threads_ready = false;
 	data->threads_running_nbr = 0;
 	data->philos = s_malloc(sizeof(t_philo) * data->philo_nbr);
-	mutex_handler(&data->data_mutex, INIT);
-	mutex_handler(&data->write_mutex, INIT);
+	if (!data->philos)
+		return (-1);
+	if (mutex_handler(&data->data_mutex, INIT) != 0)
+		return (-1);
+	if (mutex_handler(&data->write_mutex, INIT) != 0)
+		return (-1);
 	data->forks = s_malloc(sizeof(t_fork) * data->philo_nbr);
+	if (!data->forks)
+		return (-1);
 	while (++i < data->philo_nbr)
 	{
-		mutex_handler(&data->forks[i].fork, INIT);
+		if (mutex_handler(&data->forks[i].fork, INIT) != 0)
+			return (-1);
 		data->forks[i].fork_id = i;
 	}
-	init_philo(data);
+	if (init_philo(data) != 0)
+		return (-1);
+	return (0);
 }
