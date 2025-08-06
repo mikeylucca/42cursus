@@ -6,7 +6,7 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 12:54:15 by misoares          #+#    #+#             */
-/*   Updated: 2025/08/06 21:35:29 by misoares         ###   ########.fr       */
+/*   Updated: 2025/08/06 23:08:29 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,12 @@
 #define OFFSET 48
 #define MAX_PHILOS 200
 #define MIN_TIME 6e4
-#define THINKING_PERCENTAGE 0.42
+#define THINKING_PERCENTAGE 0.62
 #define SINGLE_PHILO_SLEEP_US 200
 #define CONVERSION_RATE_TO_MS 1000
 #define MONITOR_DELAY 1000
+#define THREAD_SYNC_POLL_INTERVAL 500	// Microseconds between thread startup checks
+#define MONITOR_STARTUP_DELAY 5000	// Microseconds to wait after all threads start
 
 
 /*

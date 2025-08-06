@@ -6,7 +6,7 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 17:35:32 by misoares          #+#    #+#             */
-/*   Updated: 2025/08/06 22:33:59 by misoares         ###   ########.fr       */
+/*   Updated: 2025/08/06 23:26:18 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,9 @@ void	thinking(t_philo *philo, bool pre_sim)
 	t_think = t_eat * 2 - t_sleep;
 	if (t_think < 0)
 		t_think = 0;
-	precise_usleep(t_think * THINKING_PERCENTAGE, philo->data);
+	if (t_think > 0)
+		precise_usleep(t_think, philo->data);
+	//precise_usleep(t_think * THINKING_PERCENTAGE, philo->data);
 }
 
 
@@ -69,7 +71,7 @@ void	*dinner_sim(void *data)
 	t_philo *philo;
 	
 	philo = (t_philo *)data;
-	
+
 	wait_threads(philo->data);
 	set_long(&philo->philo_mutex, &philo->last_mealtime, gettime(MILLISECOND));
 	increase_long(&philo->data->data_mutex, &philo->data->threads_running_nbr);

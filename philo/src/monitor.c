@@ -6,7 +6,7 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 14:42:59 by misoares          #+#    #+#             */
-/*   Updated: 2025/08/06 22:26:07 by misoares         ###   ########.fr       */
+/*   Updated: 2025/08/06 22:57:22 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ void	*monitor_dinner(void *data)
 
 	pData = (t_data *)data;
 	while (!all_threads_running(&pData->data_mutex, &pData->threads_running_nbr, pData->philo_nbr))
-		usleep(500);
-	usleep(5000);
+		usleep(THREAD_SYNC_POLL_INTERVAL);
+	usleep(MONITOR_STARTUP_DELAY);
 	sleep_time = pData->time_to_die / 10;
 	if (sleep_time < 100)
 		sleep_time = 100;
