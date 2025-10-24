@@ -6,7 +6,7 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 13:01:41 by misoares          #+#    #+#             */
-/*   Updated: 2025/08/06 21:35:29 by misoares         ###   ########.fr       */
+/*   Updated: 2025/10/24 13:05:08 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,15 @@
 */
 static void	fork_assign(t_philo *philo, t_fork *forks, int pos)
 {
-	int philo_nbr;
+	int		philo_nbr;
+	t_fork	*temp;
 
 	philo_nbr = philo->data->philo_nbr;
-
 	philo->first_fork = &forks[pos];
 	philo->second_fork = &forks[(pos + 1) % philo_nbr];
-
 	if (philo->first_fork->fork_id > philo->second_fork->fork_id)
 	{
-		t_fork *temp = philo->first_fork;
+		temp = philo->first_fork;
 		philo->first_fork = philo->second_fork;
 		philo->second_fork = temp;
 	}
@@ -34,8 +33,8 @@ static void	fork_assign(t_philo *philo, t_fork *forks, int pos)
 
 static int	init_philo(t_data *data)
 {
-	int i;
-	t_philo *philo;
+	int		i;
+	t_philo	*philo;
 
 	i = -1;
 	while (++i < data->philo_nbr)
@@ -47,7 +46,6 @@ static int	init_philo(t_data *data)
 		philo->data = data;
 		if (mutex_handler(&philo->philo_mutex, INIT) != 0)
 			return (-1);
-
 		fork_assign(philo, data->forks, i);
 	}
 	return (0);
@@ -55,7 +53,7 @@ static int	init_philo(t_data *data)
 
 int	init_data(t_data *data)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	data->end_simulation = false;

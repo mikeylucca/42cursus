@@ -6,23 +6,22 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 18:12:46 by misoares          #+#    #+#             */
-/*   Updated: 2025/08/06 22:45:46 by misoares         ###   ########.fr       */
+/*   Updated: 2025/10/24 13:15:14 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-void    wait_threads(t_data *data)
+void	wait_threads(t_data *data)
 {
 	while (!get_bool(&data->data_mutex, &data->threads_ready))
 		usleep(500);
-	
 }
 
 /* Monitor waits till all threads are running */
 bool	all_threads_running(t_mutex *mutex, long *threads, long philo_nbr)
 {
-	bool ret;
+	bool	ret;
 
 	ret = false;
 	mutex_handler(mutex, LOCK);

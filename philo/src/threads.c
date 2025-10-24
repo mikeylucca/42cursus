@@ -6,7 +6,7 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 13:01:53 by misoares          #+#    #+#             */
-/*   Updated: 2025/08/06 21:35:29 by misoares         ###   ########.fr       */
+/*   Updated: 2025/10/24 13:16:34 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,20 +26,23 @@ static int	thread_error_handler(int status, t_opcode opcode)
 		return (error_return(RED"Value spec by thread isnt joinable"RESET));
 	else if (status == ESRCH)
 		return (error_return(RED"No thread found corresponding to that spec by"
-			"thread specified by thread ID."RESET));
+				"thread specified by thread ID."RESET));
 	else if (status == EDEADLK)
 	{
-		error_return(RED"Deadlock detecter || value of thread spec the calling thread"RESET);
+		error_return(RED"Deadlock detected || "
+			"value of thread spec the calling thread"RESET);
 		return (status);
 	}
 	return (status);
 }
 
-int	thread_handler(pthread_t *thread, void *(*foo)(void *), void *data, t_opcode opcode)
+int	thread_handler(pthread_t *thread, void *(*foo)(void *),
+					void *data, t_opcode opcode)
 {
 	if (opcode == CREATE)
 	{
-		return (thread_error_handler(pthread_create(thread, NULL, foo, data), opcode));
+		return (thread_error_handler(pthread_create(thread, NULL, foo, data),
+				opcode));
 	}
 	else if (opcode == JOIN)
 		return (thread_error_handler(pthread_join(*thread, NULL), opcode));

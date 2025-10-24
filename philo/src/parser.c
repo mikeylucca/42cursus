@@ -6,26 +6,26 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 14:19:09 by misoares          #+#    #+#             */
-/*   Updated: 2025/08/06 21:35:29 by misoares         ###   ########.fr       */
+/*   Updated: 2025/10/24 15:28:32 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-static inline bool is_digit(char c)
+static inline bool	is_digit(char c)
 {
-	return(c >= '0' && c <= '9');
+	return (c >= '0' && c <= '9');
 }
 
-static inline bool is_space(char c)
+static inline bool	is_space(char c)
 {
 	return ((c >= 9 && c <= 13) || c == 32);
 }
 
 static const char *input_validate(const char *str)
 {
-	int len;
-	const char *number;
+	int			len;
+	const char	*number;
 
 	len = 0;
 	while (is_space(*str))
@@ -54,9 +54,9 @@ static const char *input_validate(const char *str)
 }
 
 
-static long philo_atol(const char *str)
+static long	philo_atol(const char *str)
 {
-	long num;
+	long	num;
 
 	num = 0;
 	str = input_validate(str);
@@ -87,7 +87,7 @@ int	input_parse(t_data *data, char **av)
 	data->philo_nbr = philo_atol(av[1]);
 	if (data->philo_nbr == -1)
 		return (-1);
-	data->time_to_die = philo_atol(av[2]) * CONVERSION_RATE_TO_MS; //* 1e3 = 1000
+	data->time_to_die = philo_atol(av[2]) * CONVERSION_RATE_TO_MS;
 	if (data->time_to_die == -1)
 		return (-1);
 	data->time_to_eat = philo_atol(av[3]) * CONVERSION_RATE_TO_MS;
@@ -98,15 +98,9 @@ int	input_parse(t_data *data, char **av)
 		return (-1);
 	if (data->time_to_die < MIN_TIME || data->time_to_eat < MIN_TIME
 		|| data->time_to_sleep < MIN_TIME)
-	{
-		error_return(RED"Timestamp lower than 60ms"RESET);
-		return (-1);
-	}
+		return (error_return(RED"Timestamp lower than 60ms"RESET));
 	if (data->philo_nbr > MAX_PHILOS)
-	{
-		error_return(RED"Maximum amount of Philos is 200"RESET);
-		return (-1);
-	}
+		return (error_return(RED"Maximum amount of Philos is 200"RESET));
 	if (av[5])
 	{
 		data->max_meals = philo_atol(av[5]);

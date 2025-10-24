@@ -6,7 +6,7 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 15:47:17 by misoares          #+#    #+#             */
-/*   Updated: 2025/08/06 21:40:21 by misoares         ###   ########.fr       */
+/*   Updated: 2025/10/24 13:10:15 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,15 @@ static int	mutex_error_handler(int status, t_opcode opcode)
 		return (status);
 	}
 	else if (status == EINVAL && opcode == INIT)
-		return (error_return(RED"The value specified by attr is invalid."RESET));
+		return (error_return(RED"The value specified is invalid."RESET));
 	else if (status == EDEADLK)
-		return (error_return(RED"Deadlock would occur if thread blocked waiting for mutex"RESET));
+		return (error_return(RED"Deadlock would occur if thread blocked "
+				"waiting for mutex"RESET));
 	else if (status == EPERM)
-		return (error_return(RED"Current thread doesnt hold lock on mutex"RESET));
+		return (error_return(RED"Current thread doesn't hold lock on "
+				"mutex"RESET));
 	else if (status == ENOMEM)
-		return (error_return(RED"Process cant alloc memory to create another mutex"RESET));
+		return (error_return(RED"cant alloc memory to create new mutex"RESET));
 	else if (status == EBUSY)
 		return (error_return(RED"Mutex locked"RESET));
 	return (status);
