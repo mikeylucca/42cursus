@@ -1,38 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   utils_string.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/15 13:01:46 by misoares          #+#    #+#             */
-/*   Updated: 2025/11/03 15:12:26 by misoares         ###   ########.fr       */
+/*   Created: 2025/10/30 17:00:00 by misoares          #+#    #+#             */
+/*   Updated: 2025/11/03 15:16:37 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-int	main(int ac, char **av)
+bool	is_digit(char c)
 {
-	t_data	data;
+	return (c >= '0' && c <= '9');
+}
 
-	if (ac == 5 || ac == 6)
-	{
-		if (input_parse(&data, av) != 0)
-			return (1);
-		if (init_data(&data) != 0)
-		{
-			cleaner(&data);
-			return (1);
-		}
-		start_simulation(&data);
-		cleaner(&data);
-	}
-	else
-	{
-		error_return("Incorrect Input.\n"
-			GREEN BOLD"Correct usage is: ./philo 5 800 200 200 [5]\n"RESET);
-		return (1);
-	}
-	return (0);
+bool	is_space(char c)
+{
+	return ((c >= 9 && c <= 13) || c == 32);
 }

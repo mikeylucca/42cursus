@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atol.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: misoares <misoares@student.42lisboa.com>   #+#  +:+       +#+        */
+/*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-06-15 14:23:20 by misoares          #+#    #+#             */
-/*   Updated: 2025-06-15 14:23:20 by misoares         ###   ########.fr       */
+/*   Created: 2025/06/15 14:23:20 by misoares          #+#    #+#             */
+/*   Updated: 2025/11/03 17:29:07 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

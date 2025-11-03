@@ -6,7 +6,7 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 13:52:43 by misoares          #+#    #+#             */
-/*   Updated: 2025/08/06 21:35:29 by misoares         ###   ########.fr       */
+/*   Updated: 2025/11/03 15:04:17 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	cleaner(t_data *data)
 {
-	t_philo *philo;
-	int i;
+	t_philo	*philo;
+	int		i;
 
 	i = -1;
 	while (data->philo_nbr > ++i)
@@ -31,7 +31,7 @@ void	cleaner(t_data *data)
 
 long	gettime(t_timecode timecode)
 {
-	struct timeval tv;
+	struct timeval	tv;
 
 	if (gettimeofday(&tv, NULL))
 	{
@@ -52,11 +52,12 @@ long	gettime(t_timecode timecode)
 
 void	precise_usleep(long usec, t_data *data)
 {
-	long start;
-	long elapsed;
-	long remain;
-	long check_counter = 0;
+	long	start;
+	long	elapsed;
+	long	remain;
+	long	check_counter;
 
+	check_counter = 0;
 	start = gettime(MICROSECOND);
 	while (gettime(MICROSECOND) - start < usec)
 	{
@@ -68,10 +69,9 @@ void	precise_usleep(long usec, t_data *data)
 		{
 			while (gettime(MICROSECOND) - start < usec)
 			{
-				// Use unsafe version for maximum performance in tight loops
 				check_counter++;
 				if (check_counter % 50000 == 0 && simulation_done_unsafe(data))
-					break;
+					break ;
 			}
 		}
 	}
@@ -80,5 +80,5 @@ void	precise_usleep(long usec, t_data *data)
 int	error_return(const char *error)
 {
 	printf(RED "%s\n" RESET, error);
-	return(-1);
+	return (-1);
 }

@@ -1,38 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   simulation_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/15 13:01:46 by misoares          #+#    #+#             */
-/*   Updated: 2025/11/03 15:12:26 by misoares         ###   ########.fr       */
+/*   Created: 2025/11/03 15:13:07 by misoares          #+#    #+#             */
+/*   Updated: 2025/11/03 17:28:12 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-int	main(int ac, char **av)
+bool	simulation_done(t_data *data)
 {
-	t_data	data;
+	return (get_bool(&data->data_mutex, &data->end_simulation));
+}
 
-	if (ac == 5 || ac == 6)
-	{
-		if (input_parse(&data, av) != 0)
-			return (1);
-		if (init_data(&data) != 0)
-		{
-			cleaner(&data);
-			return (1);
-		}
-		start_simulation(&data);
-		cleaner(&data);
-	}
-	else
-	{
-		error_return("Incorrect Input.\n"
-			GREEN BOLD"Correct usage is: ./philo 5 800 200 200 [5]\n"RESET);
-		return (1);
-	}
-	return (0);
+bool	simulation_done_unsafe(t_data *data)
+{
+	return (data->end_simulation);
 }

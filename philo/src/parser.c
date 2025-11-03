@@ -6,28 +6,28 @@
 /*   By: misoares <misoares@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 14:19:09 by misoares          #+#    #+#             */
-/*   Updated: 2025/08/06 21:35:29 by misoares         ###   ########.fr       */
+/*   Updated: 2025/10/30 17:14:46 by misoares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-static inline bool is_digit(char c)
+static int	validate_digit_length(const char *str)
 {
-	return(c >= '0' && c <= '9');
-}
-
-static inline bool is_space(char c)
-{
-	return ((c >= 9 && c <= 13) || c == 32);
-}
-
-static const char *input_validate(const char *str)
-{
-	int len;
-	const char *number;
+	int	len;
 
 	len = 0;
+	while (is_digit(*str++))
+		len++;
+	if (len > 10)
+		return (error_return(RED"Value too big, limit is INT_MAX"RESET));
+	return (0);
+}
+
+static const char	*input_validate(const char *str)
+{
+	const char	*number;
+
 	while (is_space(*str))
 		str++;
 	if (*str == '+')
@@ -43,20 +43,14 @@ static const char *input_validate(const char *str)
 		return (NULL);
 	}
 	number = str;
-	while (is_digit(*str++))
-		len++;
-	if (len > 10)
-	{
-		error_return(RED"Value too big, limit is INT_MAX"RESET);
+	if (validate_digit_length(str) == -1)
 		return (NULL);
-	}
 	return (number);
 }
 
-
-static long philo_atol(const char *str)
+static long	philo_atol(const char *str)
 {
-	long num;
+	long	num;
 
 	num = 0;
 	str = input_validate(str);
@@ -72,6 +66,15 @@ static long philo_atol(const char *str)
 	return (num);
 }
 
+static int	parse_and_convert(long *dest, char *arg, int convert)
+{
+	*dest = philo_atol(arg);
+	if (*dest == -1)
+		return (-1);
+	if (convert)
+		*dest *= CONVERSION_RATE_TO_MS;
+	return (0);
+}
 
 /*
 *./philo 5 800 200 200 [5]
@@ -84,33 +87,22 @@ static long philo_atol(const char *str)
 
 int	input_parse(t_data *data, char **av)
 {
-	data->philo_nbr = philo_atol(av[1]);
-	if (data->philo_nbr == -1)
+	if (parse_and_convert(&data->philo_nbr, av[1], 0) == -1)
 		return (-1);
-	data->time_to_die = philo_atol(av[2]) * CONVERSION_RATE_TO_MS; //* 1e3 = 1000
-	if (data->time_to_die == -1)
+	if (parse_and_convert(&data->time_to_die, av[2], 1) == -1)
 		return (-1);
-	data->time_to_eat = philo_atol(av[3]) * CONVERSION_RATE_TO_MS;
-	if (data->time_to_eat == -1)
+	if (parse_and_convert(&data->time_to_eat, av[3], 1) == -1)
 		return (-1);
-	data->time_to_sleep = philo_atol(av[4]) * CONVERSION_RATE_TO_MS;
-	if (data->time_to_sleep == -1)
+	if (parse_and_convert(&data->time_to_sleep, av[4], 1) == -1)
 		return (-1);
 	if (data->time_to_die < MIN_TIME || data->time_to_eat < MIN_TIME
 		|| data->time_to_sleep < MIN_TIME)
-	{
-		error_return(RED"Timestamp lower than 60ms"RESET);
-		return (-1);
-	}
+		return (error_return(RED"Timestamp lower than 60ms"RESET));
 	if (data->philo_nbr > MAX_PHILOS)
-	{
-		error_return(RED"Maximum amount of Philos is 200"RESET);
-		return (-1);
-	}
+		return (error_return(RED"Maximum amount of Philos is 200"RESET));
 	if (av[5])
 	{
-		data->max_meals = philo_atol(av[5]);
-		if (data->max_meals == -1)
+		if (parse_and_convert(&data->max_meals, av[5], 0) == -1)
 			return (-1);
 	}
 	else
