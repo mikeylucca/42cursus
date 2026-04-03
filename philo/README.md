@@ -1,303 +1,52 @@
-# Philosophers - Dining Philosophers Problem Solution
+# philo
 
-[![Build Status](https://img.shields.io/badge/build-passing-brightgreen)]()
-[![42 Project](https://img.shields.io/badge/42-project-blue)]()
-[![Norm](https://img.shields.io/badge/norm-passing-success)]()
+## Overview
+philo is a multithreaded simulation of the Dining Philosophers problem implemented with POSIX threads and mutexes. The project focuses on synchronization correctness, timing precision, and stable behavior under contention.
 
-A multithreaded simulation solving the classic **Dining Philosophers Problem** using POSIX threads (pthreads) and mutexes. This project demonstrates concurrent programming, thread synchronization, and deadlock prevention strategies.
+## Tech Stack
+- Language: C
+- Concurrency: `pthread` threads and mutexes
+- Timing APIs: `gettimeofday`, `usleep`
+- Build system: Make (`-pthread`)
 
----
+## Core Concepts Demonstrated
+- Race-condition prevention through strict mutex-guarded accessors
+- Deadlock-aware fork acquisition strategy
+- Monitor thread design for liveness checks (death detection)
+- Thread startup coordination and desynchronization strategies
+- High-load stability and deterministic cleanup
 
-## Table of Contents
+## Implementation Highlights
+- A dedicated monitor thread periodically checks philosopher state and terminates the simulation on death.
+- Shared state access is centralized through thread-safe getter/setter helpers.
+- Per-philosopher mutexes protect mutable local state (`last_mealtime`, meal counters, full status).
+- Global mutexes coordinate simulation flags and serialized output.
+- Single-philosopher edge case is handled separately.
 
-- [The Problem](#the-problem)
-- [Core Concepts](#core-concepts)
-- [How It Works](#how-it-works)
-- [Architecture](#architecture)
-- [Building & Running](#building--running)
-- [Testing](#testing)
-- [Project Structure](#project-structure)
-- [Key Implementation Details](#key-implementation-details)
-- [Q&A](#qa)
+## Project Structure
+- `src/simulation.c`: philosopher routine, eat/sleep/think cycle, startup
+- `src/monitor.c`: liveness monitoring and stop conditions
+- `src/getter_setter.c`: synchronized state access primitives
+- `src/mutexes.c`, `src/threads.c`: safe wrappers around pthread operations
+- `src/parser.c`, `src/init.c`: argument parsing and setup
+- `include/philo.h`: data model, enums, constants, interfaces
+- `my_tester.py`: repeated scenario testing helper
 
----
-
-## The Problem
-
-### The Dining Philosophers Problem
-
-Five philosophers sit at a round table with a bowl of spaghetti. Between each pair of philosophers is a single fork (5 forks total). To eat, a philosopher must pick up **both** the fork on their left and right.
-
-**The Challenge:**
-- Philosophers alternate between **eating**, **thinking**, and **sleeping**
-- A philosopher needs **two forks** to eat
-- If all philosophers pick up their left fork simultaneously, **deadlock** occurs
-- A philosopher **dies** if they don't eat within `time_to_die` milliseconds
-- The simulation must prevent deadlock, starvation, and data races
-
-**Real-World Analogy:**  
-This models resource contention in operating systems (processes competing for CPU, memory, I/O) and distributed systems (nodes accessing shared databases).
-
----
-
-## Core Concepts
-
-### 1. **Concurrency vs. Parallelism**
-- **Concurrency**: Multiple tasks making progress (context switching on single core)
-- **Parallelism**: Multiple tasks executing simultaneously (multiple cores)
-- This project uses **pthreads** to achieve both
-
-### 2. **Race Conditions**
-When multiple threads access shared data without synchronization:
-```c
-// Without mutex (WRONG)
-philo->last_mealtime = gettime();  // Thread 1
-time = philo->last_mealtime;        // Thread 2 reads stale value
-```
-
-**Solution**: Mutexes protect critical sections:
-```c
-pthread_mutex_lock(&philo->philo_mutex);
-philo->last_mealtime = gettime();  // Atomic operation
-pthread_mutex_unlock(&philo->philo_mutex);
-```
-
-### 3. **Deadlock Prevention**
-Traditional deadlock occurs when:
-- Philosopher 1 holds fork A, waits for fork B
-- Philosopher 2 holds fork B, waits for fork A
-
-**Our Solution**: **Fork ID Ordering**  
-Always acquire lower-numbered fork first:
-```c
-if (philo->first_fork->fork_id > philo->second_fork->fork_id)
-    swap(&philo->first_fork, &philo->second_fork);
-```
-This breaks the circular wait condition.
-
-### 4. **Thread Desynchronization**
-Without staggering, all philosophers start simultaneously → lock-step behavior → cascading failures.
-
-**Even-Count Strategy** (e.g., 4 philos):
-```c
-if (philo->id % 2 == 0)
-    precise_usleep(60µs);  // Even IDs wait briefly
-```
-
-**Odd-Count Strategy** (e.g., 5 philos):
-```c
-if (philo->id % 2)
-    thinking(philo, true);  // Odd IDs calculate stagger time
-```
-
----
-
-## How It Works
-
-### Simulation Flow
-
-```
-┌─────────────────────────────────────────────────────┐
-│  1. PARSE INPUT                                     │
-│     ./philo 5 800 200 200 [7]                       │
-│     (philos, die, eat, sleep, [meals])              │
-└─────────────┬───────────────────────────────────────┘
-              │
-              ▼
-┌─────────────────────────────────────────────────────┐
-│  2. INITIALIZE DATA STRUCTURES                      │
-│     • Allocate philosophers & forks                 │
-│     • Initialize mutexes (data, write, philo, fork) │
-│     • Set timing parameters (× 1000 for µs)         │
-└─────────────┬───────────────────────────────────────┘
-              │
-              ▼
-┌─────────────────────────────────────────────────────┐
-│  3. CREATE THREADS                                  │
-│     • Philosopher threads (pthread_create)          │
-│     • Monitor thread (death detection)              │
-└─────────────┬───────────────────────────────────────┘
-              │
-              ▼
-┌─────────────────────────────────────────────────────┐
-│  4. DESYNCHRONIZE PHILOSOPHERS                      │
-│     • Even IDs: sleep 60µs                          │
-│     • Odd IDs: calculate thinking time              │
-└─────────────┬───────────────────────────────────────┘
-              │
-              ▼
-┌─────────────────────────────────────────────────────┐
-│  5. MAIN LOOP (for each philosopher)                │
-│     ┌────────────────────────────────────┐          │
-│     │  THINKING → EATING → SLEEPING      │          │
-│     └────────────────────────────────────┘          │
-│     • Acquire forks (lower ID first)                │
-│     • Update last_mealtime atomically               │
-│     • Sleep for eat/sleep durations                 │
-│     • Check meal count & end_simulation flag        │
-└─────────────┬───────────────────────────────────────┘
-              │
-              ▼
-┌─────────────────────────────────────────────────────┐
-│  6. MONITOR THREAD                                  │
-│     • Polls every time_to_die/10 (100-1000µs)       │
-│     • Checks: current_time - last_mealtime > die?   │
-│     • Sets end_simulation if death detected         │
-└─────────────┬───────────────────────────────────────┘
-              │
-              ▼
-┌─────────────────────────────────────────────────────┐
-│  7. CLEANUP                                         │
-│     • pthread_join() all threads                    │
-│     • Destroy mutexes                               │
-│     • Free allocated memory                         │
-└─────────────────────────────────────────────────────┘
-```
-
----
-
-## Architecture
-
-### Critical Anti-Pattern: Direct Access
-```c
-// ❌ NEVER DO THIS (causes data races)
-if (philo->data->end_simulation) { ... }
-time = philo->last_mealtime;
-```
-
-### Correct Pattern: Thread-Safe Getters/Setters
-```c
-// ✅ ALWAYS USE THESE (from getter_setter.c)
-bool get_bool(t_mutex *mutex, bool *value);
-void set_bool(t_mutex *mutex, bool *dest, bool value);
-long get_long(t_mutex *mutex, long *value);
-void set_long(t_mutex *mutex, long *dest, long value);
-void increase_long(t_mutex *mutex, long *value);
-```
-
-**Example Usage:**
-```c
-// Check if simulation ended
-if (get_bool(&philo->data->data_mutex, &philo->data->end_simulation))
-    return;
-
-// Update last meal time atomically
-set_long(&philo->philo_mutex, &philo->last_mealtime, gettime(MILLISECOND));
-```
-
-### Mutex Hierarchy
-1. **`data_mutex`**: Protects `end_simulation`, `threads_running_nbr`, `start_simulation`
-2. **`philo_mutex`**: Protects `last_mealtime`, `full`, `meals_counter`
-3. **`write_mutex`**: Serializes printf output (prevents interleaved text)
-4. **`fork_mutex`**: Protects individual fork state
-
----
-
-## Building & Running
-
-### Prerequisites
-- GCC with pthread support
-- Make
-- Linux/macOS (POSIX-compliant system)
-
-### Compilation
+## Build & Run
 ```bash
-make        # Build project
-make clean  # Remove object files
-make fclean # Full clean (removes binary)
-make re     # Rebuild from scratch
-```
-
-### Usage
-```bash
-./philo <number_of_philosophers> <time_to_die> <time_to_eat> <time_to_sleep> [number_of_times_each_philosopher_must_eat]
-```
-
-**Arguments:**
-- `number_of_philosophers`: 1-200 (number of philos/forks)
-- `time_to_die`: Milliseconds until death if not eating
-- `time_to_eat`: Milliseconds to eat (fork holding time)
-- `time_to_sleep`: Milliseconds to sleep
-- `[optional]` number of meals: Simulation stops when all philos eat this many times
-
-**Examples:**
-```bash
-# Single philosopher (should die)
-./philo 1 800 200 200
-
-# 5 philosophers, 800ms to die, 200ms eat/sleep (should survive)
+make
 ./philo 5 800 200 200
-
-# 4 philosophers, tight timing, 7 meals per philo
-./philo 4 410 200 200 7
-
-# High load test (199 philosophers)
-./philo 199 610 200 200 10
+./philo 5 800 200 200 7
 ```
-
----
 
 ## Testing
-
-### Using the Test Script
-
-The `my_tester.py` script runs comprehensive test suites with multiple iterations:
-
 ```bash
-# Basic usage (10 iterations per test)
 ./my_tester.py
-
-# Custom iterations
-./my_tester.py --iterations 20
-
-# Specific test suites
-./my_tester.py --test mandatory    # Eval sheet tests
-./my_tester.py --test uneven-live  # Odd philosopher counts
-./my_tester.py --test even-live    # Even philosopher counts
-./my_tester.py --test all          # All standard tests
-./my_tester.py --test hardcore     # Extended stress tests
-
-# Single test case (20 iterations)
-./my_tester.py --single 5 800 200 200 7
-
-# Custom meal count
-./my_tester.py --times-to-eat 15
+./my_tester.py --test all --iterations 20
 ```
 
-### Test Categories
-
-#### 1. **Mandatory Tests** (from eval sheet)
-- `1-800-200-200` → Should die (can't acquire 2 forks)
-- `5-800-200-200-7` → Should survive (7 meals)
-- `4-410-200-200` → Should survive (tight timing)
-- `4-310-200-100` → Should die (impossible timing)
-
-#### 2. **Even-Count Tests**
-- `4-410-200-200` → Tests desynchronization with 60µs delay
-- `50-410-200-200` → Medium load
-- `198-610-200-200` → High load (near max threads)
-
-#### 3. **Odd-Count Tests**
-- `5-610-200-200` → Tests thinking time formula
-- `31-610-200-200` → Medium odd count
-- `199-610-200-200` → Max load, odd count
-
-### Interpreting Results
-
-**Success:**
-```
-✓ 10/10 passed (100%) [PASS]
-____________________________________________
-```
-
-**Failure (logs saved):**
-```
-✓ 9/10 passed (90%) [FAIL]
-✗ 1 failures saved to fails/*.log
-____________________________________________
-```
-
-**Failure Log Format** (`fails/199-610-200-200-10_4.log`):
+## Why This Project Matters
+philo demonstrates production-relevant concurrency skills: synchronization discipline, predictable shutdown behavior, and robust timing logic under thread contention.
 ```
 Test case: 199 610 200 200 10
 Philosopher died
